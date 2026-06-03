@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReposGrid from '../../components/ReposGrid';
+import { fetchRepos } from '../../lib/github';
+
+let repos = [];
+let error = null;
+
+try {
+  repos = await fetchRepos();
+} catch (e) {
+  error = 'No se pudieron cargar los repositorios de GitHub.';
+}
+---
+
+<Layout title="Proyectos — Sagiii.dev">
+  <div style="max-width:1200px;margin:0 auto;padding:3rem 1.5rem;">
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h1 class="section-title" style="font-size:1.8rem;margin:0 0 0.3rem;">
+          Mis <span>Repositorios</span>
+        </h1>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin:0;">
+          <i class="bi bi-github" style="color:var(--fox);"></i>
+          &nbsp;{repos.length} repositorios públicos en GitHub
+        </p>
+      </div>
+      <a
+        href="https://github.com/Sagiiiii?tab=repositories"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-outline-fox"
+        style="padding:0.35rem 1rem;font-size:0.82rem;"
+      >
+        <i class="bi bi-github"></i> Ver en GitHub
+      </a>
+    </div>
+
+    <div class="fox-divider"></div>
+
+    {error ? (
+      <div class="alert alert-danger">{error}</div>
+    ) : (
+      <ReposGrid repos={repos} client:load />
+    )}
+  </div>
+</Layout>

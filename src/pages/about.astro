@@ -1,0 +1,361 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { TECH_ICON } from '../lib/tech-icons';
+---
+
+<Layout title="Sobre mí — Sagiii.dev">
+  <div style="max-width:1200px;margin:0 auto;padding:3rem 1.5rem;">
+
+    <!-- ── HEADER PERSONAL ── -->
+    <div class="about-header" style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--border);">
+
+      <!-- Avatar col -->
+      <div style="text-align:center;">
+        <div style="position:relative;display:inline-block;">
+          <div class="avatar-glow" style="width:200px;height:200px;border-radius:50%;border:3px solid var(--fox);margin:auto;overflow:hidden;">
+            <img src="/img/Yo2v.png" alt="David Garcia Giron" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div style="position:absolute;bottom:8px;right:4px;background:var(--fox);border-radius:20px;padding:4px 12px;font-size:0.7rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:0.35rem;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-dot 1.5s ease-in-out infinite;"></span>Disponible
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:1rem;">
+          {[['3+','Años exp.'],['13+','Proyectos'],['20+','Tecnologías']].map(([v,l]) => (
+            <div class="card" style="padding:0.65rem 0.3rem;text-align:center;">
+              <div style="font-weight:800;color:var(--fox);font-size:1.1rem;">{v}</div>
+              <div style="color:var(--text-muted);font-size:0.6rem;line-height:1.3;">{l}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Social links -->
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:1rem;">
+          <a href="https://www.linkedin.com/in/david-adolfo-garcia-giron-3205322b6/" target="_blank" rel="noopener"
+            style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.5rem;background:rgba(10,102,194,0.15);border:1px solid rgba(10,102,194,0.4);border-radius:8px;color:#0A66C2;text-decoration:none;font-size:0.82rem;font-weight:600;">
+            <i class="bi bi-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/Sagiiiii" target="_blank" rel="noopener"
+            style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.5rem;background:var(--bg-card2);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.82rem;font-weight:600;">
+            <i class="bi bi-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Info col -->
+      <div>
+        <p style="color:var(--fox);font-size:0.75rem;letter-spacing:3px;font-weight:700;margin-bottom:0.5rem;">SOBRE MÍ</p>
+        <h1 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:0.3rem;">
+          David Adolfo <span style="color:var(--fox)">Garcia Giron</span>
+        </h1>
+        <p style="color:var(--fox);font-size:0.9rem;font-weight:600;margin-bottom:0.5rem;">@Sagiii</p>
+        <h2 style="font-size:0.9rem;color:var(--text-muted);font-weight:400;margin-bottom:0.75rem;line-height:1.6;">
+          Data Science Engineer · Full Stack Developer · Systems Integrator
+        </h2>
+
+        <!-- Quick contact -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem;font-size:0.85rem;">
+          <span style="color:var(--text-muted);">
+            <i class="bi bi-geo-alt" style="color:var(--fox);"></i> Huancayo, Perú
+          </span>
+          <a href="mailto:sagitaforever@gmail.com" style="color:var(--text-muted);text-decoration:none;">
+            <i class="bi bi-envelope" style="color:var(--fox);"></i> sagitaforever@gmail.com
+          </a>
+          <a href="tel:+51985000716" style="color:var(--text-muted);text-decoration:none;">
+            <i class="bi bi-telephone" style="color:var(--fox);"></i> +51 985 000 716
+          </a>
+        </div>
+
+        <!-- Bio -->
+        <p style="color:var(--text-muted);line-height:1.9;margin-bottom:1rem;font-size:0.92rem;">
+          Profesional técnico graduado de <strong style="color:var(--text)">TECSUP</strong> (Diseño de Software e Integración de Sistemas) y
+          <strong style="color:var(--text)">Continental University of Florida</strong> (BSc. Data Science), con más de 3 años de experiencia
+          en Tecnologías de la Información. Mi pasión es aportar soluciones innovadoras y eficientes a los desafíos empresariales,
+          usando programación, redes, bases de datos y sistemas de gestión. Trabajo con empresas peruanas para que se digitalicen,
+          automaticen procesos y crezcan con tecnología que realmente funciona y entrega resultados medibles.
+        </p>
+        <p style="color:var(--text-muted);line-height:1.9;margin-bottom:1.25rem;font-size:0.92rem;">
+          Actualmente trabajo como <strong style="color:var(--text)">Técnico de TIC en Colegio Praxis</strong> brindando soporte tecnológico integral,
+          y llevo proyectos freelance de desarrollo web, e-commerce y ciencia de datos bajo mi marca <strong style="color:var(--fox)">sagiii.dev</strong>.
+        </p>
+
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <a href="/contact" class="btn-fox" style="padding:0.4rem 1rem;font-size:0.85rem;">
+            <i class="bi bi-envelope"></i> Contáctame
+          </a>
+          <a href="/projects" class="btn-outline-fox" style="padding:0.4rem 1rem;font-size:0.85rem;">
+            <i class="bi bi-grid"></i> Ver proyectos
+          </a>
+          <a href="/cv-david-garcia.pdf" download class="btn-outline-fox" style="padding:0.4rem 1rem;font-size:0.85rem;">
+            <i class="bi bi-file-earmark-arrow-down"></i> Descargar CV
+          </a>
+          <a href="https://www.linkedin.com/in/david-adolfo-garcia-giron-3205322b6/" target="_blank"
+            style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;font-size:0.85rem;border:1px solid #0A66C2;color:#0A66C2;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.2s;"
+            onmouseover="this.style.background='rgba(10,102,194,0.15)'" onmouseout="this.style.background='transparent'">
+            <i class="bi bi-linkedin"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MAIN GRID ── -->
+    <div class="about-main" style="display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:start;">
+
+      <!-- LEFT COL -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Technologies with icons -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1.25rem;font-size:0.95rem;">
+            <i class="bi bi-code-slash"></i> Stack Tecnológico
+          </h5>
+          {[
+            ['Lenguajes',       ['Python','JavaScript','TypeScript','Dart','PHP','Java','Kotlin','Swift','HTML','CSS','Visual Basic']],
+            ['Front-End',       ['Angular','React','Astro','Vue.js','Bootstrap','Tailwind CSS','Chart.js','Jinja2','Blade']],
+            ['Back-End',        ['Flask','Express.js','Node.js','Laravel','Gunicorn']],
+            ['Bases de datos',  ['MySQL','MongoDB','PostgreSQL','SQLite']],
+            ['Mobile',          ['Flutter','Android','Dart','Xamarin']],
+            ['Data Science',    ['Pandas','NumPy','Matplotlib','Seaborn','Plotly','Scikit-learn','Jupyter Notebook']],
+            ['DevOps / Deploy', ['Git','GitHub','GitLab','Docker','Netlify','WordPress']],
+          ].map(([cat, items]) => (
+            <div style="margin-bottom:1rem;">
+              <p style="color:var(--text-muted);font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.5rem;">{cat as string}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+                {(items as string[]).map(item => {
+                  const icon = TECH_ICON[item];
+                  return (
+                    <span title={item} style="display:inline-flex;align-items:center;gap:0.3rem;background:var(--bg-card2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:0.72rem;font-weight:600;color:var(--text-muted);cursor:default;transition:border-color 0.2s;"
+                      onmouseover="this.style.borderColor='var(--fox)';this.style.color='var(--fox)'"
+                      onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+                      {icon && <img src={icon} alt={item} width={14} height={14} style="object-fit:contain;" />}
+                      {item}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Languages -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1rem;font-size:0.95rem;">
+            <i class="bi bi-translate"></i> Idiomas
+          </h5>
+          <div style="margin-bottom:0.875rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.35rem;">
+              <span style="font-size:0.85rem;">Español</span>
+              <span style="font-size:0.82rem;color:var(--fox);">Nativo</span>
+            </div>
+            <div class="lang-bar"><div class="lang-bar-fill" style="width:100%;"></div></div>
+          </div>
+          <div style="margin-bottom:0.875rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.35rem;">
+              <span style="font-size:0.85rem;">Inglés</span>
+              <span style="font-size:0.82rem;color:var(--fox);">Intermedio (Duolingo Cert.)</span>
+            </div>
+            <div class="lang-bar"><div class="lang-bar-fill" style="width:55%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Methodologies -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:0.875rem;font-size:0.95rem;">
+            <i class="bi bi-kanban"></i> Metodologías
+          </h5>
+          <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+            {['Scrum','XP','CRISP-DM','B2B','B2C','Freelance','Remoto','Presencial'].map(m => (
+              <span class="tech-badge">{m}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1rem;font-size:0.95rem;">
+            <i class="bi bi-patch-check-fill"></i> Certificaciones
+          </h5>
+          {[
+            ['CAPM — PMI','Project Management International','2024'],
+            ['English Proficiency','Duolingo English Test','May 2025'],
+            ['Python De 0 a Experto','Instituto certificador','2024'],
+            ['Minería 4.0','Instituto certificador','2024'],
+            ['Dashboard con Excel','Instituto certificador','2024'],
+          ].map(([cert, org, year]) => (
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:0.5rem 0;border-bottom:1px solid var(--border);">
+              <div>
+                <p style="margin:0;font-size:0.82rem;font-weight:600;">{cert as string}</p>
+                <p style="margin:0;font-size:0.72rem;color:var(--text-muted);">{org as string}</p>
+              </div>
+              <span class="tech-badge" style="font-size:0.62rem;white-space:nowrap;">{year as string}</span>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      <!-- RIGHT COL -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- What I do -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1rem;font-size:0.95rem;">
+            <i class="bi bi-lightning-fill"></i> ¿Qué puedo hacer por ti?
+          </h5>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;">
+            {[
+              ['bi-globe2','Desarrollo Web','Sistemas web a medida, e-commerce, CRM e inventarios para negocios B2B y B2C con stack moderno.'],
+              ['bi-phone-fill','Desarrollo Mobile','Aplicaciones Android nativas y multiplataforma con Flutter/Dart y Xamarin/.NET MAUI.'],
+              ['bi-bar-chart-fill','Data Science','Análisis de datos, visualización interactiva y modelos predictivos (ARIMA, Random Forest) para decisiones estratégicas.'],
+              ['bi-cart-fill','E-commerce','Tiendas online con catálogo, carrito, checkout e integración de pagos. MEAN Stack o Laravel.'],
+              ['bi-server','Backend & APIs','APIs RESTful con Flask, Express.js o Laravel. Bases de datos SQL y NoSQL. Arquitectura escalable.'],
+              ['bi-headset','Soporte TIC','Soporte tecnológico, mantenimiento de infraestructura, redes y administración de sistemas institucionales.'],
+            ].map(([icon, title, desc]) => (
+              <div style="background:var(--bg-card2);border-radius:10px;padding:1rem;border:1px solid var(--border);transition:border-color 0.2s;"
+                onmouseover="this.style.borderColor='var(--fox)'" onmouseout="this.style.borderColor='var(--border)'">
+                <i class={`bi ${icon}`} style="color:var(--fox);font-size:1.3rem;display:block;margin-bottom:0.5rem;"></i>
+                <p style="font-weight:700;font-size:0.85rem;margin-bottom:0.35rem;">{title as string}</p>
+                <p style="color:var(--text-muted);font-size:0.78rem;line-height:1.6;margin:0;">{desc as string}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1.25rem;font-size:0.95rem;">
+            <i class="bi bi-briefcase-fill"></i> Experiencia Profesional
+          </h5>
+          <div style="position:relative;">
+            <div style="position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--border);"></div>
+            {[
+              ['Abr 2026 – Actualidad','Técnico de TIC','Colegio Praxis','Huancayo, Perú','Apoyo integral en la logística TIC del colegio. Soporte tecnológico, gestión de equipos informáticos y asistencia en la infraestructura tecnológica institucional. Administración de sistemas y red interna.','Presencial'],
+              ['Jul 2025 – Nov 2025','Jefe de Sección Censal','INEI — Censos Nacionales','Huancayo, Junín','Lideré y supervisé equipos de empadronadores durante los Censos Nacionales de Población y Vivienda. Coordiné el cumplimiento de procedimientos y aseguré la calidad y entrega oportuna de los datos.','Presencial'],
+              ['Ene 2023 – Actualidad','Desarrollador Full Stack Freelance','sagiii.dev','Remoto','Desarrollo de sistemas web a medida: e-commerce (Soreus Motors), dashboards de análisis de datos, sistemas de tickets. Stack Python/Flask, MEAN Stack, Laravel. Gestión integral de proyectos desde levantamiento de requerimientos hasta deploy.','Remoto'],
+              ['Oct 2022 – Ene 2024','Responsable de Soporte y Almacén','Soreus Motors E.I.R.L.','El Tambo, Huancayo','Desarrollé un sistema e-commerce personalizado para la empresa (MEAN Stack). Soporte tecnológico integral, gestión de almacén, inventarios y CRM. Control y trazabilidad de pedidos.','Presencial'],
+              ['Sep 2024 – Ene 2025','Soporte y Actualización Web','Centro de Distribución DXN','Huancayo, Junín','Actualicé y administré la página web corporativa en WordPress. Publicación y promoción de eventos en plataformas digitales.','Híbrido'],
+              ['Ago & Nov 2024','Operador Tecnológico','INEI — Campañas EMLA y ENOM','Huancayo, Junín','Operé tablets, laptops y sistemas de captura de datos estadísticos. Verificación del almacenamiento y transmisión segura de información.','Presencial'],
+              ['Jun 2022 – Dic 2022','Responsable de Mantenimiento TI','C.E.P. María Auxiliadora','Huancayo, Junín','Soporte técnico a equipos informáticos y administración del sistema web institucional.','Presencial'],
+              ['Abr 2021 – Jul 2021','Practicante — Área de Soporte','Centro de Distribución DXN','Huancayo, Perú','Prácticas profesionales en soporte tecnológico y mantenimiento de equipos de cómputo.','Presencial'],
+              ['Dic 2018 – Mar 2019','Practicante — Área de Mantenimiento','San Fernando','Huaral, Lima','Prácticas en mantenimiento industrial y sistemas de control durante formación técnica en TECSUP.','Presencial'],
+            ].map(([date, role, company, loc, desc, mode]) => (
+              <div style="position:relative;padding-left:36px;margin-bottom:1.75rem;">
+                <div style="position:absolute;left:4px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--fox);border:2px solid var(--bg-card);"></div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.25rem;margin-bottom:0.25rem;">
+                  <h6 style="font-weight:700;margin:0;font-size:0.88rem;">{role as string}</h6>
+                  <span class="tech-badge" style="font-size:0.62rem;">{date as string}</span>
+                </div>
+                <p style="margin:0 0 0.2rem;color:var(--fox);font-size:0.82rem;font-weight:600;">{company as string}</p>
+                <div style="display:flex;gap:0.75rem;margin-bottom:0.35rem;">
+                  <p style="margin:0;color:var(--text-muted);font-size:0.76rem;">
+                    <i class="bi bi-geo-alt"></i> {loc as string}
+                  </p>
+                  <p style="margin:0;color:var(--text-muted);font-size:0.76rem;">
+                    <i class="bi bi-wifi"></i> {mode as string}
+                  </p>
+                </div>
+                <p style="margin:0;color:var(--text-muted);font-size:0.82rem;line-height:1.7;">{desc as string}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="card" style="padding:1.25rem;">
+          <h5 style="font-weight:700;color:var(--fox);margin-bottom:1.25rem;font-size:0.95rem;">
+            <i class="bi bi-mortarboard-fill"></i> Formación Académica
+          </h5>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;">
+            {[
+              ['2023 – 2025','Bachelor of Science in Data Science','Continental University of Florida (CFU)','Estados Unidos — Nota: 17','bi-award'],
+              ['2023 – 2025','Certificate in Data Programming','Continental University of Florida (CFU)','Estados Unidos','bi-file-earmark-check'],
+              ['2023 – 2025','Certificate in Machine Learning','Continental University of Florida (CFU)','Estados Unidos','bi-cpu'],
+              ['2022 – 2025','Ingeniería de Sistemas','Universidad Continental','Huancayo, Perú — Nota: 16 — Estudios hasta 6to ciclo, convalidado en CFU','bi-building'],
+              ['2024','Certificación Internacional CAPM','Project Management Institute (PMI)','Internacional','bi-patch-check-fill'],
+              ['2017 – 2020','Diseño de Software e Integración de Sistemas','TECSUP','Lima, Perú — Título Técnico Superior','bi-tools'],
+              ['Colegio Praxis','Educación Secundaria','Colegio Praxis','Huancayo, Perú','bi-book'],
+            ].map(([year, degree, inst, detail, icon]) => (
+              <div style="display:flex;gap:0.875rem;align-items:flex-start;">
+                <div style="min-width:44px;height:44px;border-radius:10px;background:var(--bg-card2);border:1px solid var(--fox);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i class={`bi ${icon}`} style="color:var(--fox);font-size:1.1rem;"></i>
+                </div>
+                <div>
+                  <span class="tech-badge" style="font-size:0.62rem;margin-bottom:0.3rem;display:inline-block;">{year as string}</span>
+                  <h6 style="font-weight:700;margin:0 0 0.15rem;font-size:0.875rem;">{degree as string}</h6>
+                  <p style="margin:0 0 0.1rem;color:var(--fox);font-size:0.82rem;font-weight:600;">{inst as string}</p>
+                  <p style="margin:0;color:var(--text-muted);font-size:0.76rem;">{detail as string}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GITHUB STATS ── -->
+  <div id="github-stats" style="max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;">
+    <div style="margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);">
+      <p style="color:var(--fox);font-size:0.72rem;letter-spacing:3px;font-weight:700;margin-bottom:0.5rem;">◈ GITHUB ◈</p>
+      <h2 class="section-title" style="font-size:1.5rem;margin-bottom:1.75rem;">
+        Estadísticas en <span>GitHub</span>
+      </h2>
+
+      <!-- Trofeos -->
+      <div style="text-align:center;margin-bottom:1.75rem;overflow-x:auto;border-radius:12px;border:1px solid var(--border);padding:1rem;background:var(--bg-card);">
+        <img
+          src="https://github-profile-trophy.vercel.app/?username=Sagiiiii&theme=darkhub&no-frame=true&column=4&margin-w=8&margin-h=8&rank=SECRET,SSS,SS,S,AAA,AA,A,B"
+          alt="GitHub Trophies — Sagiiiii"
+          style="max-width:100%;border-radius:8px;"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Stats + Streak -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.75rem;" class="stats-grid">
+        <div style="border-radius:12px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card);">
+          <img
+            src="https://github-readme-stats.vercel.app/api?username=Sagiiiii&show_icons=true&theme=dark&bg_color=1E1E1E&title_color=E8651A&icon_color=E8651A&text_color=EFEFEF&border_color=333333&hide_border=false&count_private=true"
+            alt="GitHub Stats"
+            style="width:100%;display:block;"
+            loading="lazy"
+          />
+        </div>
+        <div style="border-radius:12px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card);">
+          <img
+            src="https://github-readme-streak-stats.herokuapp.com/?user=Sagiiiii&theme=dark&background=1E1E1E&border=333333&stroke=E8651A&ring=E8651A&fire=FF8C00&currStreakNum=EFEFEF&sideNums=EFEFEF&currStreakLabel=E8651A&sideLabels=999999&dates=999999"
+            alt="GitHub Streak"
+            style="width:100%;display:block;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Most used languages -->
+      <div style="text-align:center;border-radius:12px;border:1px solid var(--border);overflow:hidden;background:var(--bg-card);padding:0.5rem;">
+        <img
+          src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sagiiiii&theme=dark&bg_color=1E1E1E&title_color=E8651A&text_color=EFEFEF&border_color=333333&layout=compact&hide_border=false&langs_count=10"
+          alt="Most used languages"
+          style="max-width:500px;width:100%;display:block;margin:0 auto;"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  @media (max-width: 900px) {
+    .about-header { grid-template-columns: 1fr !important; }
+    .about-main { grid-template-columns: 1fr !important; }
+    .stats-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 600px) {
+    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+</style>

@@ -1,0 +1,207 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contacto — Sagiii.dev">
+  <div style="max-width:1200px;margin:0 auto;padding:3rem 1.5rem;">
+    <div style="max-width:820px;margin:0 auto;">
+
+      <div style="text-align:center;margin-bottom:2.5rem;">
+        <p style="color:var(--fox);font-size:0.72rem;letter-spacing:3px;font-weight:700;margin-bottom:0.75rem;">◈ CONTACTO ◈</p>
+        <h1 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;margin-bottom:0.75rem;">
+          ¿Hablamos? <span style="color:var(--fox)">🦊</span>
+        </h1>
+        <p style="color:var(--text-muted);max-width:480px;margin:0 auto;line-height:1.8;">
+          Disponible para proyectos freelance, trabajo en equipo o simplemente conversar sobre tecnología.
+          Respondo en menos de 24 horas.
+        </p>
+      </div>
+      <div class="fox-divider"></div>
+
+      <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1.8fr;gap:2rem;align-items:start;">
+
+        <!-- Info -->
+        <div style="display:flex;flex-direction:column;gap:0.875rem;">
+          {[
+            ['bi-envelope-fill','Email','sagitaforever@gmail.com','mailto:sagitaforever@gmail.com','#E8651A'],
+            ['bi-telephone-fill','WhatsApp / Teléfono','+51 985 000 716','https://wa.me/51985000716','#25D366'],
+            ['bi-geo-alt-fill','Ubicación','Huancayo, Perú',null,'#E8651A'],
+            ['bi-linkedin','LinkedIn','david-adolfo-garcia-giron','https://www.linkedin.com/in/david-adolfo-garcia-giron-3205322b6/','#0A66C2'],
+            ['bi-github','GitHub','github.com/Sagiiiii','https://github.com/Sagiiiii','#EFEFEF'],
+          ].map(([icon, label, val, href, color]) => (
+            <div class="card" style="padding:0.875rem 1rem;display:flex;align-items:center;gap:0.875rem;">
+              <div style={`width:40px;height:40px;border-radius:10px;background:${color}20;border:1px solid ${color}50;display:flex;align-items:center;justify-content:center;flex-shrink:0;`}>
+                <i class={`bi ${icon}`} style={`color:${color};font-size:1.1rem;`}></i>
+              </div>
+              <div style="min-width:0;">
+                <p style="margin:0;font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">{label as string}</p>
+                {href ? (
+                  <a href={href as string} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener"
+                    style="color:var(--text);text-decoration:none;font-size:0.83rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;">
+                    {val as string}
+                  </a>
+                ) : (
+                  <p style="margin:0;color:var(--text);font-size:0.83rem;font-weight:600;">{val as string}</p>
+                )}
+              </div>
+            </div>
+          ))}
+
+          <!-- WhatsApp CTA -->
+          <a href="https://wa.me/51985000716?text=Hola%20Sagiii%2C%20te%20escribo%20desde%20tu%20portfolio%20web."
+            target="_blank" rel="noopener"
+            style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.4);border-radius:10px;color:#25D366;text-decoration:none;font-weight:700;font-size:0.9rem;transition:all 0.2s;"
+            onmouseover="this.style.background='rgba(37,211,102,0.25)'" onmouseout="this.style.background='rgba(37,211,102,0.15)'">
+            <i class="bi bi-whatsapp" style="font-size:1.2rem;"></i>
+            Escribir por WhatsApp
+          </a>
+
+          <!-- Calendly -->
+          <button onclick="openCalendly()"
+            style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem;background:rgba(0,107,168,0.15);border:1px solid rgba(0,107,168,0.4);border-radius:10px;color:#006BA8;font-weight:700;font-size:0.9rem;transition:all 0.2s;cursor:pointer;width:100%;"
+            onmouseover="this.style.background='rgba(0,107,168,0.25)'" onmouseout="this.style.background='rgba(0,107,168,0.15)'">
+            <i class="bi bi-calendar-check" style="font-size:1.2rem;"></i>
+            Agendar reunión (Calendly)
+          </button>
+        </div>
+
+        <!-- Form -->
+        <div class="card" style="padding:1.75rem;">
+          <div id="alertBox"></div>
+          <form id="contactForm" style="display:flex;flex-direction:column;gap:1rem;">
+            <!-- FormSubmit: sin registro, solo verifica tu email la primera vez -->
+            <input type="hidden" name="_subject" value="🦊 Nuevo mensaje desde sagiii.dev" />
+            <input type="hidden" name="_template" value="box" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" style="display:none;" />
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div>
+                <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Nombre *</label>
+                <input type="text" name="name" required placeholder="Tu nombre"
+                  class="form-input" style="width:100%;" />
+              </div>
+              <div>
+                <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Email *</label>
+                <input type="email" name="email" required placeholder="tu@email.com"
+                  class="form-input" style="width:100%;" />
+              </div>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Asunto</label>
+              <input type="text" name="subject_field" placeholder="¿En qué te puedo ayudar?"
+                class="form-input" style="width:100%;" />
+            </div>
+
+            <div>
+              <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Presupuesto aproximado</label>
+              <select name="budget" class="form-input" style="width:100%;">
+                <option value="">Seleccionar...</option>
+                <option value="<1000">Menos de S/1,000</option>
+                <option value="1000-3000">S/1,000 — S/3,000</option>
+                <option value="3000-5000">S/3,000 — S/5,000</option>
+                <option value=">5000">Más de S/5,000</option>
+                <option value="conversar">Prefiero conversarlo</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Mensaje *</label>
+              <textarea name="message" required rows={5} placeholder="Cuéntame sobre tu proyecto..."
+                class="form-input" style="width:100%;resize:vertical;"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-fox" style="justify-content:center;padding:0.7rem;font-size:0.95rem;">
+              <i class="bi bi-send-fill"></i> Enviar mensaje
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .form-input {
+    background: var(--bg-card2);
+    border: 1px solid #444;
+    color: var(--text);
+    border-radius: 8px;
+    padding: 0.6rem 0.875rem;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  .form-input:focus { border-color: var(--fox); }
+  .form-input::placeholder { color: #666; }
+  select.form-input option { background: var(--bg-card2); }
+
+  @media (max-width: 640px) {
+    .contact-grid { grid-template-columns: 1fr !important; }
+    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  const alertBox = document.getElementById('alertBox')!;
+  const btn = document.getElementById('submitBtn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+    btn.disabled = true;
+
+    const formData = new FormData(form);
+    // Adjunta asunto personalizado
+    const asunto = formData.get('subject_field') || 'Consulta desde portfolio';
+    formData.set('_subject', `🦊 [Portfolio] ${asunto}`);
+    formData.delete('subject_field');
+
+    try {
+      // FormSubmit.co — sin registro, envía directo a tu Gmail
+      const res = await fetch('https://formsubmit.co/ajax/sagitaforever64@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (data.success === 'true' || data.success === true) {
+        alertBox.innerHTML = `
+          <div class="alert alert-success" style="display:flex;align-items:center;gap:0.5rem;">
+            <i class="bi bi-check-circle-fill"></i>
+            ¡Mensaje enviado! Te responderé a la brevedad. 🦊
+          </div>`;
+        form.reset();
+      } else {
+        throw new Error('No se pudo enviar');
+      }
+    } catch (err: any) {
+      alertBox.innerHTML = `
+        <div class="alert alert-danger" style="display:flex;align-items:center;gap:0.5rem;">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          Error al enviar. Escríbeme directamente a
+          <a href="mailto:sagitaforever@gmail.com" style="color:var(--fox);">sagitaforever@gmail.com</a>
+        </div>`;
+    } finally {
+      btn.innerHTML = '<i class="bi bi-send-fill"></i> Enviar mensaje';
+      btn.disabled = false;
+    }
+  });
+
+  /* Calendly popup — reemplaza YOUR_CALENDLY_URL con tu URL real de Calendly */
+  (window as any).openCalendly = function() {
+    const url = 'https://calendly.com/sagiii'; // actualiza con tu URL
+    if ((window as any).Calendly) {
+      (window as any).Calendly.initPopupWidget({ url });
+    } else {
+      window.open(url, '_blank');
+    }
+  };
+</script>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" is:inline async></script>

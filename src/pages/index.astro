@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/HeroSection';
+import ReposGrid from '../components/ReposGrid';
+import { fetchRepos } from '../lib/github';
+
+let repos = [];
+try {
+  const all = await fetchRepos();
+  repos = all.slice(0, 6);
+} catch {}
+
+const testimonials = [
+  {
+    name: 'Soreus Motors E.I.R.L.',
+    role: 'Cliente — E-commerce & Sistema de Inventario',
+    text: 'David desarrolló nuestro sistema e-commerce desde cero, incluyendo catálogo de productos, carrito de compras y panel administrativo. La solución mejoró significativamente nuestra operación de ventas online.',
+    avatar: '🏎️',
+    stars: 5,
+  },
+  {
+    name: 'Centro de Distribución DXN',
+    role: 'Cliente — Soporte Web y Actualización',
+    text: 'Excelente profesional. Actualizó nuestra página web corporativa y nos ayudó con la gestión digital de eventos. Trabajo puntual y de calidad.',
+    avatar: '🌿',
+    stars: 5,
+  },
+  {
+    name: 'Colegio Praxis',
+    role: 'Empleador — Técnico TIC',
+    text: 'Brinda soporte tecnológico integral en nuestra institución. Proactivo, responsable y con sólidos conocimientos en infraestructura TIC y mantenimiento de equipos.',
+    avatar: '🏫',
+    stars: 5,
+  },
+];
+---
+
+<Layout title="David Garcia — Sagiii.dev | Full Stack Developer · Data Science">
+  <HeroSection client:load />
+
+  <!-- PROYECTOS -->
+  <section style="padding:3rem 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem;">
+        <h2 class="section-title" style="font-size:1.6rem;margin:0;">
+          Mis <span>Proyectos</span>
+        </h2>
+        <a href="/projects" class="btn-outline-fox" style="padding:0.3rem 0.9rem;font-size:0.82rem;">
+          Ver todos <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="fox-divider"></div>
+      {repos.length > 0
+        ? <ReposGrid repos={repos} client:load />
+        : <p style="color:var(--text-muted);text-align:center;padding:3rem 0;">Cargando repositorios...</p>
+      }
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section style="padding:3rem 0;background:var(--bg-card2);">
+    <div style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <p style="color:var(--fox);font-size:0.72rem;letter-spacing:3px;font-weight:700;margin-bottom:0.5rem;">◈ TESTIMONIOS ◈</p>
+        <h2 class="section-title" style="font-size:1.6rem;">Lo que dicen <span>mis clientes</span></h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {testimonials.map((t, i) => (
+          <div class="card" style="padding:1.75rem;position:relative;overflow:hidden;">
+            <!-- Quote mark -->
+            <span style="position:absolute;top:1rem;right:1.25rem;font-size:4rem;color:var(--fox);opacity:0.12;font-family:Georgia,serif;line-height:1;">"</span>
+
+            <!-- Stars -->
+            <div style="display:flex;gap:0.2rem;margin-bottom:1rem;">
+              {Array.from({length: t.stars}).map(_ => (
+                <i class="bi bi-star-fill" style="color:var(--fox);font-size:0.85rem;"></i>
+              ))}
+            </div>
+
+            <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.8;margin-bottom:1.25rem;font-style:italic;">
+              "{t.text}"
+            </p>
+
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <div style="width:44px;height:44px;border-radius:50%;background:var(--bg-card);border:2px solid var(--fox);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">
+                {t.avatar}
+              </div>
+              <div>
+                <p style="margin:0;font-weight:700;font-size:0.88rem;">{t.name}</p>
+                <p style="margin:0;color:var(--text-muted);font-size:0.75rem;">{t.role}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA testimonios -->
+      <p style="text-align:center;margin-top:2rem;color:var(--text-muted);font-size:0.85rem;">
+        ¿Trabajaste conmigo? <a href="/contact" style="color:var(--fox);font-weight:700;">Déjame tu testimonio</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- GITHUB ACTIVITY (home teaser) -->
+  <section style="padding:2.5rem 0;border-top:1px solid var(--border);">
+    <div style="max-width:1100px;margin:0 auto;padding:0 1.5rem;text-align:center;">
+      <p style="color:var(--fox);font-size:0.72rem;letter-spacing:3px;font-weight:700;margin-bottom:0.75rem;">◈ ACTIVIDAD EN GITHUB ◈</p>
+      <h2 class="section-title" style="font-size:1.4rem;margin-bottom:1.5rem;">
+        Mi <span>Contribución</span> en GitHub
+      </h2>
+      <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);">
+        <img
+          src="https://github-readme-activity-graph.vercel.app/graph?username=Sagiiiii&theme=github-compact&bg_color=1E1E1E&color=E8651A&line=E8651A&point=FFFFFF&area=true&hide_border=true"
+          alt="GitHub Activity Graph"
+          style="width:100%;max-width:900px;border-radius:12px;"
+          loading="lazy"
+        />
+      </div>
+      <a href="/about#github-stats" class="btn-outline-fox" style="margin-top:1.25rem;padding:0.4rem 1.25rem;font-size:0.85rem;">
+        Ver estadísticas completas <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </section>
+</Layout>

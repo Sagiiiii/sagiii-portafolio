@@ -1,0 +1,301 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Sagiii.dev — Portfolio',
+  description = 'David Adolfo Garcia Giron — Full Stack Developer, Data Scientist e Integrador de Sistemas. Huancayo, Perú.',
+  image = '/img/FOX2.jpg',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const siteUrl = 'https://sagiii.dev';
+
+const navLinks = [
+  { href: '/', label: { es: 'Inicio', en: 'Home' } },
+  { href: '/about', label: { es: 'Sobre mí', en: 'About' } },
+  { href: '/projects', label: { es: 'Proyectos', en: 'Projects' } },
+  { href: '/contact', label: { es: 'Contacto', en: 'Contact' } },
+];
+---
+
+<!doctype html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Primary Meta -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="David Garcia, Sagiii, desarrollador web, full stack, data science, Flask, Angular, Python, Huancayo, Peru, freelancer" />
+  <meta name="author" content="David Adolfo Garcia Giron" />
+  <link rel="canonical" href={`${siteUrl}${currentPath}`} />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={`${siteUrl}${currentPath}`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`${siteUrl}${image}`} />
+  <meta property="og:locale" content="es_PE" />
+  <meta property="og:site_name" content="Sagiii.dev" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}${image}`} />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Umami Analytics (privacy-first, no cookies) -->
+  <!-- Para activar: ve a umami.is, crea cuenta gratis, y reemplaza el data-website-id -->
+  <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="TU_ID_AQUI"></script> -->
+</head>
+<body>
+
+  <!-- ── SCROLL PROGRESS BAR ── -->
+  <div id="scrollBar" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--fox-dark),var(--fox));z-index:10000;transition:width 0.05s linear;"></div>
+
+  <!-- ── PRELOADER ── -->
+  <div id="preloader">
+    <div class="preloader-avatar">
+      <img src="/img/FOX2.jpg" alt="Fox" />
+    </div>
+    <div class="preloader-brand">
+      <span>🦊</span>
+      <span style="color:var(--text)">Sagiii</span><span style="color:var(--fox)">.dev</span>
+    </div>
+    <div class="preloader-bar">
+      <div class="preloader-bar-fill" id="barFill"></div>
+    </div>
+    <p class="preloader-text" id="preloaderText">Cargando...</p>
+  </div>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar-fixed" style="padding:0.7rem 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;">
+      <a href="/" style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.35rem;text-decoration:none;">
+        🦊 <span style="color:var(--text)">Sagiii</span><span style="color:var(--fox)">.dev</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul id="navMenu" style="display:flex;gap:0.15rem;list-style:none;margin:0;padding:0;align-items:center;">
+        {navLinks.map(link => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <li>
+              <a href={link.href}
+                data-nav-es={link.label.es}
+                data-nav-en={link.label.en}
+                style={`padding:0.4rem 0.85rem;border-radius:6px;text-decoration:none;font-size:0.88rem;font-weight:500;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};transition:color 0.2s;`}
+                onmouseover={`this.style.color='var(--fox)'`}
+                onmouseout={`if(!this.classList.contains('active'))this.style.color='var(--text-muted)'`}
+              >{link.label.es}</a>
+            </li>
+          );
+        })}
+
+        <!-- Language toggle -->
+        <li style="margin-left:0.5rem;">
+          <button id="langToggle" title="Switch language"
+            style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);padding:0.35rem 0.7rem;border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:700;transition:all 0.2s;">
+            EN
+          </button>
+        </li>
+
+        <!-- Theme toggle -->
+        <li>
+          <button id="themeToggle" title="Toggle theme"
+            style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:1rem;">
+            🌙
+          </button>
+        </li>
+
+        <!-- Mobile burger -->
+        <li>
+          <button id="menuBtn" style="display:none;background:none;border:1px solid var(--border);color:var(--text);padding:0.35rem 0.55rem;border-radius:6px;cursor:pointer;">
+            <i class="bi bi-list" style="font-size:1.25rem;"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" style="display:none;max-width:1200px;margin:0 auto;padding:0.5rem 1.5rem 1rem;border-top:1px solid var(--border);margin-top:0.5rem;">
+      {navLinks.map(link => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a href={link.href}
+            data-nav-es={link.label.es}
+            data-nav-en={link.label.en}
+            style={`display:block;padding:0.6rem 0;border-bottom:1px solid var(--border);text-decoration:none;font-size:0.9rem;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};`}>
+            {link.label.es}
+          </a>
+        );
+      })}
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <slot />
+  </main>
+
+  <!-- TESTIMONIALS are in index.astro -->
+
+  <!-- ── FOOTER ── -->
+  <footer style="background:#0E0E0E;border-top:1px solid var(--border);color:var(--text-muted);padding:1.5rem 0;text-align:center;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+      <p style="margin-bottom:0.25rem;">
+        🦊 Hecho con <span style="color:var(--fox)">♥</span> y Astro ·
+        <a href="https://github.com/Sagiiiii" target="_blank" style="color:var(--fox);text-decoration:none;">GitHub</a> ·
+        <a href="/contact" style="color:var(--fox);text-decoration:none;">Contacto</a>
+      </p>
+      <small style="color:var(--text-muted);">2026 · David Adolfo Garcia Giron · sagiii.dev</small>
+    </div>
+  </footer>
+
+  <!-- ── BACK TO TOP ── -->
+  <button id="backToTop" title="Volver arriba"
+    style="position:fixed;bottom:5.5rem;right:1.25rem;width:44px;height:44px;border-radius:50%;background:var(--fox);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1.1rem;z-index:9000;box-shadow:0 4px 16px rgba(232,101,26,0.45);transition:transform 0.2s,opacity 0.3s;">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- ── WHATSAPP FLOTANTE ── -->
+  <a href="https://wa.me/51985000716?text=Hola%20Sagiii%2C%20te%20escribo%20desde%20tu%20portfolio%20web."
+    target="_blank" rel="noopener" title="WhatsApp"
+    style="position:fixed;bottom:1.25rem;right:1.25rem;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;z-index:9001;box-shadow:0 4px 18px rgba(37,211,102,0.5);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;"
+    onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.65)'"
+    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 18px rgba(37,211,102,0.5)'">
+    <i class="bi bi-whatsapp" style="color:#fff;font-size:1.5rem;"></i>
+  </a>
+
+  <script>
+    /* ── RESPONSIVE NAV ── */
+    function checkWidth() {
+      const mob = window.innerWidth < 768;
+      const menuBtn = document.getElementById('menuBtn')!;
+      const navMenu = document.getElementById('navMenu')!;
+      menuBtn.style.display = mob ? 'flex' : 'none';
+      if (!mob) {
+        document.getElementById('mobileMenu')!.style.display = 'none';
+        navMenu.style.display = 'flex';
+      }
+    }
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
+    document.getElementById('menuBtn')?.addEventListener('click', () => {
+      const m = document.getElementById('mobileMenu')!;
+      m.style.display = m.style.display === 'none' ? 'block' : 'none';
+    });
+
+    /* ── SCROLL PROGRESS ── */
+    window.addEventListener('scroll', () => {
+      const scrolled = document.documentElement.scrollTop;
+      const total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      (document.getElementById('scrollBar') as HTMLElement).style.width = pct + '%';
+
+      /* BACK TO TOP */
+      const btn = document.getElementById('backToTop') as HTMLElement;
+      btn.style.display = scrolled > 400 ? 'flex' : 'none';
+      btn.style.opacity = scrolled > 400 ? '1' : '0';
+    }, { passive: true });
+
+    document.getElementById('backToTop')?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('backToTop')?.addEventListener('mouseover', e => {
+      (e.currentTarget as HTMLElement).style.transform = 'scale(1.1)';
+    });
+    document.getElementById('backToTop')?.addEventListener('mouseout', e => {
+      (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+    });
+
+    /* ── THEME TOGGLE ── */
+    const themeBtn = document.getElementById('themeToggle') as HTMLButtonElement;
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') ?? 'dark';
+    root.setAttribute('data-theme', savedTheme);
+    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    /* ── LANGUAGE TOGGLE ── */
+    const langBtn = document.getElementById('langToggle') as HTMLButtonElement;
+    const savedLang = localStorage.getItem('lang') ?? 'es';
+    root.setAttribute('data-lang', savedLang);
+    langBtn.textContent = savedLang === 'es' ? 'EN' : 'ES';
+    applyLang(savedLang);
+
+    langBtn.addEventListener('click', () => {
+      const isEs = root.getAttribute('data-lang') === 'es';
+      const next = isEs ? 'en' : 'es';
+      root.setAttribute('data-lang', next);
+      localStorage.setItem('lang', next);
+      langBtn.textContent = next === 'es' ? 'EN' : 'ES';
+      applyLang(next);
+    });
+
+    function applyLang(lang: string) {
+      document.querySelectorAll('[data-nav-es][data-nav-en]').forEach((el: any) => {
+        el.textContent = lang === 'en' ? el.getAttribute('data-nav-en') : el.getAttribute('data-nav-es');
+      });
+    }
+
+    /* ── PRELOADER ── */
+    const preloader = document.getElementById('preloader');
+    if (sessionStorage.getItem('visited')) {
+      preloader?.remove();
+    } else {
+      sessionStorage.setItem('visited', 'true');
+      const barFill = document.getElementById('barFill') as HTMLElement;
+      const statusText = document.getElementById('preloaderText') as HTMLElement;
+      const msgs = ['Iniciando...', 'Cargando proyectos...', 'Preparando portfolio...', 'Casi listo...', '¡Bienvenido! 🦊'];
+      let progress = 0, msgIdx = 0;
+
+      const interval = setInterval(() => {
+        progress = Math.min(progress + (progress < 70 ? 2 : progress < 90 ? 1 : 0.5), 99);
+        barFill.style.width = progress + '%';
+        const ni = Math.floor((progress / 100) * msgs.length);
+        if (ni !== msgIdx && ni < msgs.length) {
+          msgIdx = ni;
+          statusText.style.opacity = '0';
+          setTimeout(() => { statusText.textContent = msgs[msgIdx]; statusText.style.opacity = '1'; }, 200);
+        }
+      }, 30);
+
+      window.addEventListener('load', () => {
+        clearInterval(interval);
+        barFill.style.width = '100%';
+        statusText.textContent = '¡Bienvenido! 🦊';
+        setTimeout(() => {
+          preloader!.classList.add('hidden');
+          setTimeout(() => preloader?.remove(), 700);
+        }, 900);
+      });
+    }
+  </script>
+</body>
+</html>

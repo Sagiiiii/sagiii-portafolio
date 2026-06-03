@@ -1,0 +1,324 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { fetchRepos, fetchReadme } from '../../lib/github';
+import { TECH_ICON, LANG_COLOR } from '../../lib/tech-icons';
+
+export async function getStaticPaths() {
+  const repos = await fetchRepos();
+  return repos.map(r => ({ params: { id: r.name }, props: { repo: r } }));
+}
+
+const { repo } = Astro.props;
+const readmeHtml = repo.is_private ? null : await fetchReadme(repo.name);
+
+const color = LANG_COLOR[repo.language ?? ''] ?? '#E8651A';
+const pushed = new Date(repo.pushed_at).toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
+const created = new Date(repo.created_at).toLocaleDateString('es-PE', { month: 'long', year: 'numeric' });
+const displayName = repo.display_name ?? repo.name.replace(/-/g, ' ').replace(/_/g, ' ');
+const techs = repo.technologies ?? [];
+---
+
+<Layout title={`${displayName} — Sagiii.dev`} description={repo.description ?? undefined}>
+  <div style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem;">
+
+    <!-- Back -->
+    <a href="/projects" class="back-link" style="display:inline-flex;align-items:center;gap:0.4rem;color:var(--text-muted);text-decoration:none;margin-bottom:1.5rem;font-size:0.85rem;">
+      <i class="bi bi-arrow-left"></i> Volver a Proyectos
+    </a>
+
+    <!-- Hero cover -->
+    <div style="border-radius:16px;overflow:hidden;margin-bottom:2rem;border:1px solid var(--border);position:relative;">
+      {repo.image_url ? (
+        <img src={repo.image_url} alt={displayName}
+          style="width:100%;max-height:420px;object-fit:cover;display:block;" />
+      ) : (
+        <div style={`min-height:220px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg-card2) 0%,${color}25 60%,${color}10 100%);flex-direction:column;gap:1.25rem;`}>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;padding:2rem;">
+            {techs.slice(0,6).map(t => (
+              TECH_ICON[t]
+                ? <div style="padding:14px;background:rgba(255,255,255,0.07);border-radius:14px;border:1px solid rgba(255,255,255,0.1);">
+                    <img src={TECH_ICON[t]} alt={t} width={42} height={42} style="object-fit:contain;" />
+                  </div>
+                : null
+            ))}
+          </div>
+          <p style={`color:${color};font-size:0.8rem;font-weight:700;letter-spacing:2px;`}>{repo.language}</p>
+        </div>
+      )}
+      <!-- gradient overlay bottom -->
+      {repo.image_url && (
+        <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,rgba(20,20,20,0.9),transparent);"></div>
+      )}
+      <!-- Badges on image -->
+      <div style="position:absolute;top:14px;left:14px;display:flex;gap:0.5rem;">
+        {repo.language && (
+          <span style={`display:inline-flex;align-items:center;gap:0.3rem;background:rgba(20,20,20,0.85);border-radius:8px;padding:4px 10px;font-size:0.72rem;font-weight:700;color:${color};backdrop-filter:blur(6px);`}>
+            <span style={`width:8px;height:8px;border-radius:50%;background:${color};`}></span>
+            {repo.language}
+          </span>
+        )}
+        {repo.is_private && (
+          <span style="background:rgba(232,101,26,0.9);border-radius:8px;padding:4px 10px;font-size:0.72rem;font-weight:700;color:#fff;">
+            <i class="bi bi-lock-fill"></i> Privado
+          </span>
+        )}
+      </div>
+    </div>
+
+    <!-- Header + Actions -->
+    <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:flex-start;margin-bottom:2rem;" class="detail-header">
+      <div>
+        <h1 style="font-size:clamp(1.4rem,4vw,2rem);font-weight:800;margin:0 0 0.75rem;">{displayName}</h1>
+        {repo.description && (
+          <p style="color:var(--text-muted);font-size:1rem;line-height:1.8;margin:0 0 1rem;max-width:640px;">{repo.description}</p>
+        )}
+        <!-- Tech icons row -->
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+          {techs.map(t => (
+            <span title={t} style="display:inline-flex;align-items:center;gap:0.3rem;background:var(--bg-card2);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:0.72rem;font-weight:600;color:var(--text-muted);">
+              {TECH_ICON[t] && <img src={TECH_ICON[t]} alt={t} width={14} height={14} style="object-fit:contain;" />}
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Stats column -->
+      <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:110px;">
+        <div class="card" style="padding:0.7rem;text-align:center;">
+          <div style="font-weight:800;color:var(--fox);font-size:1.4rem;">{repo.stargazers_count}</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;">Stars ⭐</div>
+        </div>
+        <div class="card" style="padding:0.7rem;text-align:center;">
+          <div style="font-weight:800;color:var(--fox);font-size:1.4rem;">{repo.forks_count}</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;">Forks 🍴</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE PREVIEW BANNER (if has live URL) -->
+    {repo.homepage && (
+      <div style="background:linear-gradient(135deg,rgba(232,101,26,0.15),rgba(184,78,16,0.08));border:1px solid rgba(232,101,26,0.35);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <p style="margin:0 0 0.25rem;font-weight:700;color:var(--fox);font-size:0.95rem;">
+            <i class="bi bi-play-circle-fill"></i> Live Demo disponible
+          </p>
+          <p style="margin:0;color:var(--text-muted);font-size:0.82rem;">{repo.homepage}</p>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+          <a href={repo.homepage} target="_blank" rel="noopener" class="btn-fox" style="padding:0.6rem 1.4rem;font-size:0.9rem;">
+            <i class="bi bi-box-arrow-up-right"></i> Abrir Demo
+          </a>
+          <button id="previewToggle" class="btn-outline-fox" style="padding:0.6rem 1.2rem;font-size:0.9rem;" onclick="togglePreview()">
+            <i class="bi bi-display"></i> Preview
+          </button>
+        </div>
+      </div>
+    )}
+
+    <!-- iFrame Preview (toggled) -->
+    {repo.homepage && (
+      <div id="previewFrame" style="display:none;border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:2rem;background:var(--bg-card2);">
+        <div style="background:var(--bg-card);padding:0.6rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid var(--border);">
+          <div style="display:flex;gap:0.4rem;">
+            <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#28c840;"></span>
+          </div>
+          <span style="font-size:0.78rem;color:var(--text-muted);flex:1;text-align:center;">{repo.homepage}</span>
+          <a href={repo.homepage} target="_blank" style="color:var(--fox);font-size:0.78rem;text-decoration:none;">
+            <i class="bi bi-arrow-up-right-square"></i>
+          </a>
+        </div>
+        <iframe src={repo.homepage} title={displayName}
+          style="width:100%;height:560px;border:none;"
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-forms">
+        </iframe>
+      </div>
+    )}
+
+    <!-- Main grid -->
+    <div style="display:grid;grid-template-columns:1fr 250px;gap:2rem;align-items:start;" class="detail-grid">
+
+      <!-- README -->
+      <div>
+        {readmeHtml ? (
+          <div class="card" style="padding:2rem;">
+            <h3 style="color:var(--fox);font-size:0.9rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid var(--border);padding-bottom:0.875rem;">
+              <i class="bi bi-file-text-fill"></i> README.md
+            </h3>
+            <div class="readme-content" set:html={readmeHtml} />
+          </div>
+        ) : (
+          <div class="card" style="padding:2.5rem;text-align:center;color:var(--text-muted);">
+            <div style="font-size:3.5rem;margin-bottom:1rem;opacity:0.5;">📄</div>
+            <h4 style="margin-bottom:0.5rem;">{repo.is_private ? 'Repositorio Privado' : 'Sin README'}</h4>
+            <p style="margin-bottom:1.5rem;font-size:0.88rem;">
+              {repo.is_private
+                ? 'Este es un repositorio privado. El código no es público.'
+                : 'Este repositorio no tiene un README público.'}
+            </p>
+            {!repo.is_private && (
+              <a href={repo.html_url} target="_blank" rel="noopener" class="btn-outline-fox" style="padding:0.45rem 1.25rem;font-size:0.85rem;">
+                <i class="bi bi-github"></i> Ver en GitHub
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div style="display:flex;flex-direction:column;gap:1rem;position:sticky;top:80px;">
+
+        <!-- Links -->
+        <div class="card" style="padding:1.25rem;">
+          <h4 style="color:var(--fox);font-size:0.85rem;font-weight:700;margin-bottom:0.875rem;">
+            <i class="bi bi-link-45deg"></i> Links
+          </h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            {repo.homepage && (
+              <a href={repo.homepage} target="_blank" rel="noopener" class="btn-fox" style="justify-content:center;padding:0.5rem;font-size:0.83rem;">
+                <i class="bi bi-play-fill"></i> Ver Demo en vivo
+              </a>
+            )}
+            {!repo.is_private && (
+              <a href={repo.html_url} target="_blank" rel="noopener" class="btn-outline-fox" style="justify-content:center;padding:0.5rem;font-size:0.83rem;">
+                <i class="bi bi-github"></i> Ver en GitHub
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="card" style="padding:1.25rem;">
+          <h4 style="color:var(--fox);font-size:0.85rem;font-weight:700;margin-bottom:0.875rem;">
+            <i class="bi bi-info-circle"></i> Detalles
+          </h4>
+          <div style="display:flex;flex-direction:column;gap:0.625rem;">
+            {[
+              ['bi-calendar-plus','Creado', created],
+              ['bi-clock-history','Actualizado', pushed],
+              ['bi-code-slash','Lenguaje', repo.language ?? 'N/A'],
+              ['bi-shield-lock', 'Visibilidad', repo.is_private ? 'Privado' : 'Público'],
+            ].map(([icon, label, val]) => (
+              <div style="display:flex;justify-content:space-between;font-size:0.78rem;align-items:center;gap:0.5rem;">
+                <span style="color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;white-space:nowrap;">
+                  <i class={`bi ${icon}`}></i> {label as string}
+                </span>
+                <span style="font-weight:600;color:var(--text);text-align:right;">{val as string}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="card" style="padding:1.25rem;">
+          <h4 style="color:var(--fox);font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;">
+            <i class="bi bi-grid-3x3-gap"></i> Categorías
+          </h4>
+          <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+            {repo.categories.map(c => <span class="tech-badge" style="font-size:0.7rem;">{c}</span>)}
+          </div>
+        </div>
+
+        {repo.topics.length > 0 && (
+          <div class="card" style="padding:1.25rem;">
+            <h4 style="color:var(--fox);font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;">
+              <i class="bi bi-tag-fill"></i> Topics
+            </h4>
+            <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+              {repo.topics.map(t => <span class="tech-badge" style="font-size:0.7rem;">{t}</span>)}
+            </div>
+          </div>
+        )}
+
+        <!-- Contact CTA -->
+        <div class="card" style="padding:1.25rem;background:linear-gradient(135deg,rgba(232,101,26,0.1),rgba(184,78,16,0.05));border-color:rgba(232,101,26,0.3);">
+          <p style="font-size:0.82rem;font-weight:700;margin-bottom:0.5rem;">¿Te interesa algo similar?</p>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.875rem;line-height:1.6;">
+            Puedo desarrollar una solución personalizada para tu negocio.
+          </p>
+          <a href="/contact" class="btn-fox" style="display:block;text-align:center;padding:0.5rem;font-size:0.82rem;">
+            <i class="bi bi-envelope-fill"></i> Contáctame
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  // Back link hover
+  document.querySelector('.back-link')?.addEventListener('mouseover', (e) => {
+    (e.currentTarget as HTMLElement).style.color = 'var(--fox)';
+  });
+  document.querySelector('.back-link')?.addEventListener('mouseout', (e) => {
+    (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
+  });
+
+  // Preview toggle
+  (window as any).togglePreview = function() {
+    const frame = document.getElementById('previewFrame');
+    const btn = document.getElementById('previewToggle');
+    if (!frame || !btn) return;
+    const isHidden = frame.style.display === 'none';
+    frame.style.display = isHidden ? 'block' : 'none';
+    btn.innerHTML = isHidden
+      ? '<i class="bi bi-x-lg"></i> Cerrar'
+      : '<i class="bi bi-display"></i> Preview';
+    if (isHidden) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+</script>
+
+<style>
+.readme-content {
+  color: var(--text);
+  line-height: 1.85;
+  font-size: 0.9rem;
+}
+.readme-content h1, .readme-content h2, .readme-content h3,
+.readme-content h4, .readme-content h5 {
+  color: var(--text); margin: 1.5rem 0 0.75rem;
+  font-family: 'Poppins', sans-serif;
+}
+.readme-content h1 { font-size: 1.5rem; border-bottom: 2px solid var(--fox); padding-bottom: 0.4rem; }
+.readme-content h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
+.readme-content h3 { font-size: 1rem; color: var(--fox); }
+.readme-content p { margin: 0 0 1rem; color: var(--text-muted); }
+.readme-content a { color: var(--fox); text-decoration: none; }
+.readme-content a:hover { text-decoration: underline; }
+.readme-content code {
+  background: var(--bg-card2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 6px;
+  font-size: 0.82rem; color: #e06c75; font-family: monospace;
+}
+.readme-content pre {
+  background: var(--bg-card2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.25rem;
+  overflow-x: auto; margin: 1rem 0;
+}
+.readme-content pre code { background: transparent; border: none; padding: 0; color: var(--text); }
+.readme-content blockquote {
+  border-left: 3px solid var(--fox); padding: 0.5rem 0 0.5rem 1rem;
+  margin: 1rem 0; color: var(--text-muted);
+  background: var(--bg-card2); border-radius: 0 6px 6px 0;
+}
+.readme-content ul, .readme-content ol { padding-left: 1.5rem; color: var(--text-muted); margin-bottom: 1rem; }
+.readme-content li { margin-bottom: 0.3rem; }
+.readme-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.readme-content th { background: var(--bg-card2); color: var(--fox); padding: 0.5rem 0.75rem; border: 1px solid var(--border); text-align: left; }
+.readme-content td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); color: var(--text-muted); }
+.readme-content tr:hover td { background: var(--bg-card2); }
+.readme-content img { max-width: 100%; border-radius: 8px; margin: 0.5rem 0; border: 1px solid var(--border); }
+.readme-content hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+.readme-content p img { display: block; max-width: 80%; margin: 0.5rem auto; }
+
+@media (max-width: 700px) {
+  .detail-grid { grid-template-columns: 1fr !important; }
+  .detail-header { grid-template-columns: 1fr !important; }
+  div[style*="position:sticky"] { position: static !important; }
+}
+</style>
