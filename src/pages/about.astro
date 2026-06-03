@@ -203,7 +203,7 @@ import { TECH_ICON } from '../lib/tech-icons';
           <h5 style="font-weight:700;color:var(--fox);margin-bottom:1rem;font-size:0.95rem;">
             <i class="bi bi-lightning-fill"></i> ¿Qué puedo hacer por ti?
           </h5>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;">
+          <div class="skills-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;">
             {[
               ['bi-globe2','Desarrollo Web','Sistemas web a medida, e-commerce, CRM e inventarios para negocios B2B y B2C con stack moderno.'],
               ['bi-phone-fill','Desarrollo Mobile','Aplicaciones Android nativas y multiplataforma con Flutter/Dart y Xamarin/.NET MAUI.'],
@@ -350,12 +350,32 @@ import { TECH_ICON } from '../lib/tech-icons';
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(1.3); }
   }
+
+  /* ── Tablet / Mobile ── */
   @media (max-width: 900px) {
-    .about-header { grid-template-columns: 1fr !important; }
+    .about-header { grid-template-columns: 1fr !important; text-align: center; }
+    .about-header > div:last-child { text-align: left; }
     .about-main { grid-template-columns: 1fr !important; }
     .stats-grid { grid-template-columns: 1fr !important; }
   }
-  @media (max-width: 600px) {
-    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* ── Mobile 480px ── */
+  @media (max-width: 540px) {
+    /* Skills 2col → 1col */
+    .skills-2col { grid-template-columns: 1fr !important; }
+    /* Quick contact wrap */
+    .quick-contact { flex-direction: column !important; gap: 0.5rem !important; }
+  }
+
+  /* Inline style override for any 1fr 1fr grid on mobile */
+  @media (max-width: 480px) {
+    [style*="grid-template-columns: 1fr 1fr"],
+    [style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    [style*="grid-template-columns: repeat(3,1fr)"],
+    [style*="grid-template-columns:repeat(3,1fr)"] {
+      grid-template-columns: repeat(3,1fr) !important; /* stats keep 3 col */
+    }
   }
 </style>

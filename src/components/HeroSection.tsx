@@ -183,9 +183,10 @@ export default function HeroSection() {
             style={{ textAlign: 'center', minWidth: '280px' }}
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <div style={{ position: 'relative', display: 'inline-block', marginBottom: '1.5rem' }}>
+            <div style={{ position: 'relative', display: 'inline-block', marginBottom: '1.25rem' }}>
+              {/* className="avatar-circle-wrap" es el target del CSS mobile — NO usar aquí className en motion.div porque Framer lo pone en el div */}
               <motion.div
-                className="avatar-glow"
+                className="avatar-glow avatar-circle-wrap"
                 style={{ width: '300px', height: '300px', borderRadius: '50%', border: '3px solid var(--fox)', overflow: 'hidden', margin: 'auto' }}
                 whileHover={{ scale: 1.03 }}
                 transition={{ type: 'spring', stiffness: 300 }}
@@ -193,16 +194,18 @@ export default function HeroSection() {
                 <img src="/img/FOX2.jpg" alt="David Adolfo Garcia Giron"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </motion.div>
+              {/* Badge: posición fuera del círculo, abajo a la derecha — clase para control mobile */}
               <motion.div
+                className="avatar-badge"
                 initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7, type: 'spring' }}
-                style={{ position: 'absolute', bottom: '18px', right: '10px', background: 'var(--fox)', borderRadius: '20px', padding: '5px 14px', fontSize: '0.75rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                style={{ position: 'absolute', bottom: '14px', right: '-4px', background: 'var(--fox)', borderRadius: '20px', padding: '5px 12px', fontSize: '0.73rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.3rem', whiteSpace: 'nowrap', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
               >
-                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4ade80', animation: 'pulse-dot 1.5s ease-in-out infinite' }}></span>
+                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4ade80', animation: 'pulse-dot 1.5s ease-in-out infinite', flexShrink: 0 }}></span>
                 {lang === 'en' ? 'Available' : 'Disponible'}
               </motion.div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.65rem' }}>
+            <div className="hero-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.65rem' }}>
               {STATS.map((s, i) => (
                 <motion.div key={s.label} className="card" style={{ padding: '0.9rem 0.5rem', textAlign: 'center' }}
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 + i * 0.1 }}>
@@ -218,10 +221,27 @@ export default function HeroSection() {
 
       <style>{`
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
         @media (max-width: 860px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-avatar { min-width: auto !important; }
-          .hero-avatar > div > div { width: 200px !important; height: 200px !important; }
+          /* Grid: apila en columna, foto primero */
+          .hero-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .hero-avatar { min-width: auto !important; order: -1; }
+
+          /* FIX CRÍTICO: solo la imagen, NO el badge */
+          .avatar-circle-wrap { width: 170px !important; height: 170px !important; }
+
+          /* Badge reposicionado sin tapar la cara */
+          .avatar-badge {
+            bottom: 2px !important;
+            right: -10px !important;
+            font-size: 0.68rem !important;
+            padding: 3px 10px !important;
+          }
+          .hero-stats { gap: 0.5rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          .avatar-circle-wrap { width: 145px !important; height: 145px !important; }
         }
       `}</style>
     </section>

@@ -87,14 +87,16 @@ const navLinks = [
   </div>
 
   <!-- ── NAVBAR ── -->
-  <nav class="navbar-fixed" style="padding:0.7rem 0;">
-    <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;">
-      <a href="/" style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.35rem;text-decoration:none;">
+  <nav class="navbar-fixed" style="padding:0.65rem 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+
+      <!-- Brand -->
+      <a href="/" style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.25rem;text-decoration:none;white-space:nowrap;flex-shrink:0;">
         🦊 <span style="color:var(--text)">Sagiii</span><span style="color:var(--fox)">.dev</span>
       </a>
 
-      <!-- Desktop nav -->
-      <ul id="navMenu" style="display:flex;gap:0.15rem;list-style:none;margin:0;padding:0;align-items:center;">
+      <!-- Desktop links (hidden on mobile via JS) -->
+      <ul id="desktopNav" style="display:flex;gap:0.1rem;list-style:none;margin:0;padding:0;align-items:center;flex:1;justify-content:center;">
         {navLinks.map(link => {
           const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
           return (
@@ -102,52 +104,46 @@ const navLinks = [
               <a href={link.href}
                 data-nav-es={link.label.es}
                 data-nav-en={link.label.en}
-                style={`padding:0.4rem 0.85rem;border-radius:6px;text-decoration:none;font-size:0.88rem;font-weight:500;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};transition:color 0.2s;`}
-                onmouseover={`this.style.color='var(--fox)'`}
-                onmouseout={`if(!this.classList.contains('active'))this.style.color='var(--text-muted)'`}
+                style={`padding:0.4rem 0.8rem;border-radius:6px;text-decoration:none;font-size:0.86rem;font-weight:500;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};transition:color 0.2s;white-space:nowrap;`}
               >{link.label.es}</a>
             </li>
           );
         })}
-
-        <!-- Language toggle -->
-        <li style="margin-left:0.5rem;">
-          <button id="langToggle" title="Switch language"
-            style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);padding:0.35rem 0.7rem;border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:700;transition:all 0.2s;">
-            EN
-          </button>
-        </li>
-
-        <!-- Theme toggle -->
-        <li>
-          <button id="themeToggle" title="Toggle theme"
-            style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:1rem;">
-            🌙
-          </button>
-        </li>
-
-        <!-- Mobile burger -->
-        <li>
-          <button id="menuBtn" style="display:none;background:none;border:1px solid var(--border);color:var(--text);padding:0.35rem 0.55rem;border-radius:6px;cursor:pointer;">
-            <i class="bi bi-list" style="font-size:1.25rem;"></i>
-          </button>
-        </li>
       </ul>
+
+      <!-- Right controls (always visible) -->
+      <div style="display:flex;align-items:center;gap:0.4rem;flex-shrink:0;">
+        <button id="langToggle" title="Switch language"
+          style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.6rem;border-radius:8px;cursor:pointer;font-size:0.75rem;font-weight:700;transition:all 0.2s;white-space:nowrap;">
+          EN
+        </button>
+        <button id="themeToggle" title="Toggle theme"
+          style="background:var(--bg-card2);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.95rem;transition:all 0.2s;">
+          🌙
+        </button>
+        <!-- Hamburger: only shown on mobile -->
+        <button id="menuBtn" style="display:none;background:none;border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;">
+          <i class="bi bi-list" style="font-size:1.2rem;line-height:1;"></i>
+        </button>
+      </div>
     </div>
 
-    <!-- Mobile menu -->
-    <div id="mobileMenu" style="display:none;max-width:1200px;margin:0 auto;padding:0.5rem 1.5rem 1rem;border-top:1px solid var(--border);margin-top:0.5rem;">
-      {navLinks.map(link => {
-        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
-        return (
-          <a href={link.href}
-            data-nav-es={link.label.es}
-            data-nav-en={link.label.en}
-            style={`display:block;padding:0.6rem 0;border-bottom:1px solid var(--border);text-decoration:none;font-size:0.9rem;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};`}>
-            {link.label.es}
-          </a>
-        );
-      })}
+    <!-- Mobile dropdown -->
+    <div id="mobileMenu" style="display:none;border-top:1px solid var(--border);margin-top:0.5rem;">
+      <div style="max-width:1200px;margin:0 auto;padding:0.25rem 1.25rem 0.75rem;">
+        {navLinks.map(link => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a href={link.href}
+              data-nav-es={link.label.es}
+              data-nav-en={link.label.en}
+              style={`display:flex;align-items:center;padding:0.75rem 0.5rem;border-bottom:1px solid var(--border);text-decoration:none;font-size:0.95rem;font-weight:500;color:${isActive ? 'var(--fox)' : 'var(--text-muted)'};gap:0.5rem;`}>
+              {link.label.es}
+              {isActive && <span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--fox);"></span>}
+            </a>
+          );
+        })}
+      </div>
     </div>
   </nav>
 
@@ -172,36 +168,40 @@ const navLinks = [
 
   <!-- ── BACK TO TOP ── -->
   <button id="backToTop" title="Volver arriba"
-    style="position:fixed;bottom:5.5rem;right:1.25rem;width:44px;height:44px;border-radius:50%;background:var(--fox);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1.1rem;z-index:9000;box-shadow:0 4px 16px rgba(232,101,26,0.45);transition:transform 0.2s,opacity 0.3s;">
+    style="position:fixed;bottom:calc(5rem + env(safe-area-inset-bottom,0px));right:1rem;width:42px;height:42px;border-radius:50%;background:var(--fox);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;z-index:9000;box-shadow:0 4px 16px rgba(232,101,26,0.45);transition:transform 0.2s,opacity 0.3s;">
     <i class="bi bi-arrow-up"></i>
   </button>
 
   <!-- ── WHATSAPP FLOTANTE ── -->
   <a href="https://wa.me/51985000716?text=Hola%20Sagiii%2C%20te%20escribo%20desde%20tu%20portfolio%20web."
     target="_blank" rel="noopener" title="WhatsApp"
-    style="position:fixed;bottom:1.25rem;right:1.25rem;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;z-index:9001;box-shadow:0 4px 18px rgba(37,211,102,0.5);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;"
-    onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.65)'"
-    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 18px rgba(37,211,102,0.5)'">
-    <i class="bi bi-whatsapp" style="color:#fff;font-size:1.5rem;"></i>
+    style="position:fixed;bottom:calc(1.25rem + env(safe-area-inset-bottom,0px));right:1rem;width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;z-index:9001;box-shadow:0 4px 18px rgba(37,211,102,0.5);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;"
+    onmouseover="this.style.transform='scale(1.1)'"
+    onmouseout="this.style.transform='scale(1)'">
+    <i class="bi bi-whatsapp" style="color:#fff;font-size:1.4rem;"></i>
   </a>
 
   <script>
     /* ── RESPONSIVE NAV ── */
+    const menuBtn = document.getElementById('menuBtn') as HTMLElement;
+    const desktopNav = document.getElementById('desktopNav') as HTMLElement;
+    const mobileMenuEl = document.getElementById('mobileMenu') as HTMLElement;
+
     function checkWidth() {
       const mob = window.innerWidth < 768;
-      const menuBtn = document.getElementById('menuBtn')!;
-      const navMenu = document.getElementById('navMenu')!;
       menuBtn.style.display = mob ? 'flex' : 'none';
-      if (!mob) {
-        document.getElementById('mobileMenu')!.style.display = 'none';
-        navMenu.style.display = 'flex';
-      }
+      desktopNav.style.display = mob ? 'none' : 'flex';
+      if (!mob) mobileMenuEl.style.display = 'none';
     }
     checkWidth();
     window.addEventListener('resize', checkWidth);
-    document.getElementById('menuBtn')?.addEventListener('click', () => {
-      const m = document.getElementById('mobileMenu')!;
-      m.style.display = m.style.display === 'none' ? 'block' : 'none';
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenuEl.style.display !== 'none';
+      mobileMenuEl.style.display = isOpen ? 'none' : 'block';
+      menuBtn.innerHTML = isOpen
+        ? '<i class="bi bi-list" style="font-size:1.2rem;line-height:1;"></i>'
+        : '<i class="bi bi-x-lg" style="font-size:1rem;line-height:1;"></i>';
     });
 
     /* ── SCROLL PROGRESS ── */

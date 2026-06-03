@@ -75,7 +75,7 @@ import Layout from '../layouts/Layout.astro';
             <input type="hidden" name="_captcha" value="false" />
             <input type="text" name="_honey" style="display:none;" />
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-name-email" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
               <div>
                 <label style="display:block;font-size:0.76rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Nombre *</label>
                 <input type="text" name="name" required placeholder="Tu nombre"
@@ -141,7 +141,10 @@ import Layout from '../layouts/Layout.astro';
 
   @media (max-width: 640px) {
     .contact-grid { grid-template-columns: 1fr !important; }
-    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 540px) {
+    .form-name-email { grid-template-columns: 1fr !important; }
+    .form-input { font-size: 0.95rem; }
   }
 </style>
 
