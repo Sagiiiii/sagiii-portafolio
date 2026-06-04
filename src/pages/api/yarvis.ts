@@ -1,65 +1,84 @@
 import type { APIRoute } from 'astro';
-import Anthropic from '@anthropic-ai/sdk';
 
 export const prerender = false;
 
-const SYSTEM_PROMPT = `Eres Yarvis, el asistente de IA personal de Sagiii (David Adolfo Garcia Giron) en su portafolio web sagiii.dev.
+interface YarvisResponse {
+  respuesta: string;
+  accion: { tipo: string; url?: string; target?: string; valor?: string; selector?: string } | null;
+}
 
-Eres inteligente, directo y eficiente. Responde por defecto en español. Si el visitante escribe en inglés, responde en inglés.
+function match(msg: string, ...keywords: string[]): boolean {
+  return keywords.some(k => msg.includes(k));
+}
 
-INFORMACIÓN SOBRE SAGIII:
-- Nombre completo: David Adolfo Garcia Giron (alias: Sagiii)
-- Rol: Full Stack Developer, Data Scientist e Integrador de Sistemas — freelancer independiente
-- Ubicación: Huancayo, Perú
-- Web: sagiii.dev | GitHub: github.com/Sagiiiii
-- Stack técnico: Python, JavaScript, Angular, MongoDB, MySQL, Flask
-- Servicios: desarrollo web (e-commerce, landing pages, sistemas a medida), integración de sistemas, soporte TIC, data science aplicado
-- Rango de precios: S/2,000 a S/5,000 por proyecto según complejidad
-- Historia: Instituto técnico en Huancayo + Universidad Continental + estudios en Florida (USA). Freelancer independiente, no trabaja para agencias.
-- Clientes reales: Soreus Motors (e-commerce + sistema de inventario), Centro de Distribución DXN (web corporativa + eventos), Colegio Praxis (soporte TIC)
-- Propuesta de valor: soluciones a medida con trato directo, sin intermediarios. Formación internacional + conocimiento del mercado local peruano.
-- Modelo de cobro: por hitos (adelanto → entrega parcial → entrega final + soporte opcional)
+function getResponse(message: string): YarvisResponse {
+  const msg = message.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-PÁGINAS DEL PORTAFOLIO:
-- / — Inicio (Hero, proyectos, testimoniales)
-- /about — Sobre mí (historia, habilidades, experiencia)
-- /projects — Proyectos (portafolio completo)
-- /contact — Contacto (formulario y datos)
+  // Saludos
+  if (match(msg, 'hola', 'buenas', 'buen dia', 'buenas tardes', 'buenas noches', 'hey', 'hi', 'hello'))
+    return {
+      respuesta: '¡Hola! Soy Yarvis, el asistente de Sagiii. Puedo contarte sobre sus servicios, tecnologías, proyectos o precios. ¿En qué te ayudo?',
+      accion: null,
+    };
 
-CÓMO RESPONDER:
-Responde SIEMPRE en formato JSON válido con esta estructura exacta:
-{"respuesta": "texto de tu respuesta", "accion": null}
+  if (match(msg, 'gracias', 'thanks', 'thank you', 'perfecto', 'listo'))
+    return { respuesta: 'Con gusto. Si necesitas algo más, aquí estoy.', accion: null };
 
-O con una acción del navegador si el visitante lo pide:
-{"respuesta": "Te llevo a los proyectos", "accion": {"tipo": "navegar", "url": "/projects"}}
-{"respuesta": "Te llevo al inicio", "accion": {"tipo": "navegar", "url": "/"}}
-{"respuesta": "Voy al inicio de la página", "accion": {"tipo": "scroll", "target": "top"}}
-{"respuesta": "Voy al final de la página", "accion": {"tipo": "scroll", "target": "bottom"}}
-{"respuesta": "Cambié a modo oscuro", "accion": {"tipo": "tema", "valor": "dark"}}
-{"respuesta": "Cambié a modo claro", "accion": {"tipo": "tema", "valor": "light"}}
-{"respuesta": "Abriendo GitHub de Sagiii", "accion": {"tipo": "link", "url": "https://github.com/Sagiiiii"}}
-{"respuesta": "Abriendo WhatsApp para contactar a Sagiii", "accion": {"tipo": "link", "url": "https://wa.me/51985000716"}}
-{"respuesta": "Resaltando los proyectos en pantalla", "accion": {"tipo": "highlight", "selector": "#projects"}}
+  // Información (primero para evitar colisiones con navegación)
+  if (match(msg, 'precio', 'costo', 'cobr', 'cuesta', 'cuanto', 'presupuesto', 'tarifa'))
+    return {
+      respuesta: 'Los proyectos van de S/2,000 a S/5,000 según complejidad. Se cobra por hitos: adelanto, entrega parcial y entrega final con soporte opcional.',
+      accion: null,
+    };
 
-REGLAS:
-- Sé conciso: máximo 3-4 oraciones por respuesta.
-- Para contacto, menciona /contact o WhatsApp (sin revelar el número exacto en texto, usa la acción link).
-- Si preguntan por precios, da el rango: S/2,000 a S/5,000 según complejidad.
-- Si piden navegar a una sección, usa la acción correspondiente.
-- Para GitHub, LinkedIn u otros links: usa la acción link.
-- Sin sycophancy. Directo al punto.
-- No uses markdown en el campo respuesta. Solo texto plano.
-- El campo "accion" debe ser null o un objeto. Nunca un string.`;
+  if (match(msg, 'que hace', 'servicios', 'ofrece', 'dedica'))
+    return {
+      respuesta: 'Sagiii es Full Stack Developer y Data Scientist freelance en Huancayo, Perú. Hace desarrollo web (e-commerce, landing pages, sistemas a medida), integración de sistemas, soporte TIC y data science aplicado para empresas.',
+      accion: null,
+    };
 
-interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
+  if (match(msg, 'tecnolog', 'stack', 'lenguaje', 'herramienta', 'programa'))
+    return {
+      respuesta: 'Stack principal: Python, JavaScript, Angular, MongoDB, MySQL y Flask. Usa lo que el proyecto necesite.',
+      accion: null,
+    };
+
+  if (match(msg, 'contratar', 'cotizar', 'como lo contrato', 'empezar un proyecto'))
+    return {
+      respuesta: 'Contacta a Sagiii por WhatsApp o por el formulario de contacto. Analiza tu proyecto, define el alcance y da un presupuesto sin intermediarios.',
+      accion: { tipo: 'navegar', url: '/contact' },
+    };
+
+  // Navegación
+  if (match(msg, 'proyecto', 'portafolio', 'trabajos', 'trabajado', 'clientes'))
+    return { respuesta: 'Aquí están los proyectos de Sagiii.', accion: { tipo: 'navegar', url: '/projects' } };
+
+  if (match(msg, 'sobre', 'about', 'quien es', 'historia', 'experiencia', 'estudios'))
+    return { respuesta: 'Te cuento más sobre Sagiii.', accion: { tipo: 'navegar', url: '/about' } };
+
+  if (match(msg, 'contacto', 'contactar', 'escribir', 'mensaje', 'email', 'correo'))
+    return { respuesta: 'Te llevo a la página de contacto.', accion: { tipo: 'navegar', url: '/contact' } };
+
+  if (match(msg, 'github'))
+    return { respuesta: 'Abriendo el GitHub de Sagiii.', accion: { tipo: 'link', url: 'https://github.com/Sagiiiii' } };
+
+  if (match(msg, 'whatsapp', 'llamar', 'telefono', 'celular', 'numero'))
+    return { respuesta: 'Abriendo WhatsApp para contactar a Sagiii.', accion: { tipo: 'link', url: 'https://wa.me/51985000716' } };
+
+  if (match(msg, 'inicio', 'home', 'arriba'))
+    return { respuesta: 'Voy al inicio.', accion: { tipo: 'scroll', target: 'top' } };
+
+  // Default
+  return {
+    respuesta: 'Para esa consulta lo mejor es hablar directamente con Sagiii. ¿Te llevo al formulario de contacto?',
+    accion: { tipo: 'navegar', url: '/contact' },
+  };
 }
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { message, history = [] } = body as { message: string; history: ChatMessage[] };
+    const { message } = body as { message: string };
 
     if (!message?.trim()) {
       return new Response(JSON.stringify({ error: 'Mensaje vacío' }), {
@@ -68,53 +87,15 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const apiKey = import.meta.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      return new Response(
-        JSON.stringify({ respuesta: 'El asistente no está configurado aún. Contacta a Sagiii directamente en /contact', accion: null }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    const result = getResponse(message.trim());
 
-    const client = new Anthropic({ apiKey });
-
-    const messages: { role: 'user' | 'assistant'; content: string }[] = [
-      ...history.slice(-8).map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: message.trim() },
-    ];
-
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 512,
-      system: SYSTEM_PROMPT,
-      messages,
-    });
-
-    const raw = response.content[0].type === 'text' ? response.content[0].text : '';
-
-    let respuesta = raw;
-    let accion = null;
-
-    const jsonStart = raw.indexOf('{');
-    const jsonEnd = raw.lastIndexOf('}') + 1;
-    if (jsonStart >= 0 && jsonEnd > jsonStart) {
-      try {
-        const parsed = JSON.parse(raw.slice(jsonStart, jsonEnd));
-        respuesta = parsed.respuesta || raw;
-        accion = parsed.accion ?? null;
-      } catch {
-        respuesta = raw;
-      }
-    }
-
-    return new Response(JSON.stringify({ respuesta, accion }), {
+    return new Response(JSON.stringify(result), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (err) {
-    console.error('[Yarvis API]', err);
+  } catch {
     return new Response(
-      JSON.stringify({ respuesta: 'Error al conectar con el asistente. Intenta de nuevo o escríbele directamente a Sagiii.', accion: null }),
+      JSON.stringify({ respuesta: 'Error al procesar tu mensaje. Intenta de nuevo.', accion: null }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   }
