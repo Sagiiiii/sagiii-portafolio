@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import YarvisChat from '../components/YarvisChat';
 
 interface Props {
   title?: string;
@@ -171,6 +172,9 @@ const navLinks = [
     style="position:fixed;bottom:calc(5rem + env(safe-area-inset-bottom,0px));right:1rem;width:42px;height:42px;border-radius:50%;background:var(--fox);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;z-index:9000;box-shadow:0 4px 16px rgba(232,101,26,0.45);transition:transform 0.2s,opacity 0.3s;">
     <i class="bi bi-arrow-up"></i>
   </button>
+
+  <!-- ── YARVIS CHAT ── -->
+  <YarvisChat client:load />
 
   <!-- ── WHATSAPP FLOTANTE ── -->
   <a href="https://wa.me/51985000716?text=Hola%20Sagiii%2C%20te%20escribo%20desde%20tu%20portfolio%20web."

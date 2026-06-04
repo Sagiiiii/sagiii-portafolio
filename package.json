@@ -12,8 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.100.1",
     "@astrojs/react": "^5.0.7",
     "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^10.0.8",
     "@tailwindcss/vite": "^4.3.0",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
