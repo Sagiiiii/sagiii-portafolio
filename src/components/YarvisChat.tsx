@@ -3,6 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  sugerencias?: string[];
 }
 
 interface YarvisAction {
@@ -13,7 +14,7 @@ interface YarvisAction {
   selector?: string;
 }
 
-const QUICK_QUESTIONS = [
+const INITIAL_SUGERENCIAS = [
   '¿Qué hace Sagiii?',
   '¿Qué tecnologías usa?',
   '¿Cómo lo contrato?',
@@ -65,6 +66,7 @@ export default function YarvisChat() {
     {
       role: 'assistant',
       content: '¡Hola! Soy Yarvis, el asistente de Sagiii. ¿En qué puedo ayudarte?',
+      sugerencias: INITIAL_SUGERENCIAS,
     },
   ]);
   const [input, setInput] = useState('');
@@ -109,7 +111,11 @@ export default function YarvisChat() {
       const data = await res.json();
       setMessages(prev => [
         ...prev,
-        { role: 'assistant', content: data.respuesta || 'No pude generar una respuesta.' },
+        {
+          role: 'assistant',
+          content: data.respuesta || 'No pude generar una respuesta.',
+          sugerencias: data.sugerencias || [],
+        },
       ]);
 
       if (data.accion) {
@@ -244,29 +250,73 @@ export default function YarvisChat() {
             }}
           >
             {messages.map((msg, i) => (
-              <div
-                key={i}
-                style={{
-                  display: 'flex',
-                  justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                }}
-              >
+              <div key={i}>
                 <div
                   style={{
-                    maxWidth: '82%',
-                    padding: '0.5rem 0.75rem',
-                    borderRadius:
-                      msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
-                    background: msg.role === 'user' ? 'var(--fox)' : 'var(--bg-card2)',
-                    color: msg.role === 'user' ? '#fff' : 'var(--text)',
-                    fontSize: '0.82rem',
-                    lineHeight: 1.55,
-                    border: msg.role === 'assistant' ? '1px solid var(--border)' : 'none',
-                    wordBreak: 'break-word',
+                    display: 'flex',
+                    justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
                   }}
                 >
-                  {msg.content}
+                  <div
+                    style={{
+                      maxWidth: '82%',
+                      padding: '0.5rem 0.75rem',
+                      borderRadius:
+                        msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
+                      background: msg.role === 'user' ? 'var(--fox)' : 'var(--bg-card2)',
+                      color: msg.role === 'user' ? '#fff' : 'var(--text)',
+                      fontSize: '0.82rem',
+                      lineHeight: 1.55,
+                      border: msg.role === 'assistant' ? '1px solid var(--border)' : 'none',
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {msg.content}
+                  </div>
                 </div>
+                {msg.role === 'assistant' && msg.sugerencias && msg.sugerencias.length > 0 && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '0.35rem',
+                      marginTop: '0.4rem',
+                      paddingLeft: '0.1rem',
+                    }}
+                  >
+                    {msg.sugerencias.map(q => (
+                      <button
+                        key={q}
+                        onClick={() => sendMessage(q)}
+                        disabled={loading}
+                        style={{
+                          background: 'var(--bg-card2)',
+                          border: '1px solid var(--border)',
+                          borderRadius: '20px',
+                          color: 'var(--text-muted)',
+                          fontSize: '0.7rem',
+                          padding: '0.2rem 0.55rem',
+                          cursor: loading ? 'default' : 'pointer',
+                          transition: 'border-color 0.15s, color 0.15s',
+                          whiteSpace: 'nowrap',
+                          opacity: loading ? 0.5 : 1,
+                        }}
+                        onMouseOver={e => {
+                          if (!loading) {
+                            (e.currentTarget as HTMLElement).style.borderColor = 'var(--fox)';
+                            (e.currentTarget as HTMLElement).style.color = 'var(--fox)';
+                          }
+                        }}
+                        onMouseOut={e => {
+                          (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
+                          (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
+                        }}
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
 
@@ -291,47 +341,6 @@ export default function YarvisChat() {
 
             <div ref={messagesEndRef} />
           </div>
-
-          {/* Quick questions (only at start) */}
-          {messages.length === 1 && !loading && (
-            <div
-              style={{
-                padding: '0 0.75rem 0.5rem',
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '0.35rem',
-                flexShrink: 0,
-              }}
-            >
-              {QUICK_QUESTIONS.map(q => (
-                <button
-                  key={q}
-                  onClick={() => sendMessage(q)}
-                  style={{
-                    background: 'var(--bg-card2)',
-                    border: '1px solid var(--border)',
-                    borderRadius: '20px',
-                    color: 'var(--text-muted)',
-                    fontSize: '0.72rem',
-                    padding: '0.25rem 0.6rem',
-                    cursor: 'pointer',
-                    transition: 'border-color 0.15s, color 0.15s',
-                    whiteSpace: 'nowrap',
-                  }}
-                  onMouseOver={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = 'var(--fox)';
-                    (e.currentTarget as HTMLElement).style.color = 'var(--fox)';
-                  }}
-                  onMouseOut={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                    (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-                  }}
-                >
-                  {q}
-                </button>
-              ))}
-            </div>
-          )}
 
           {/* Input */}
           <div
