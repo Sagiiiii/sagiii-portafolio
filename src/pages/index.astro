@@ -2,9 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection';
 import ReposGrid from '../components/ReposGrid';
-import { fetchRepos } from '../lib/github';
+import { fetchRepos, type GitHubRepo } from '../lib/github';
 
-let repos = [];
+let repos: GitHubRepo[] = [];
 try {
   const all = await fetchRepos();
   repos = all.slice(0, 6);
