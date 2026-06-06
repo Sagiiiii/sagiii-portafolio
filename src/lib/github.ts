@@ -33,6 +33,7 @@ const REPO_IMAGES: Record<string, string> = {
   'Analsis-Soreus-Motors-CAPSTOM-PROJECT': '/img/datascience.jpg',
   'flutter-components':                    '/img/mobile_flutter.jpg',
   'helpdesk-laravel':                      '/img/dashboard-la-gi-6.png',
+  'praxis-torneo':                         '/img/praxis-torneo.jpg',
 };
 
 const LANG_CATEGORIES: Record<string, string[]> = {
@@ -61,6 +62,7 @@ const REPO_CAT_OVERRIDES: Record<string, string[]> = {
   'flutter-components':                    ['mobile'],
   'helpdesk-laravel':                      ['backend', 'web'],
   'personal_yarvis_linux':                 ['backend', 'data'],
+  'praxis-torneo':                         ['frontend', 'web'],
 };
 
 // Technologies per repo (from language analysis + README)
@@ -75,6 +77,7 @@ const REPO_TECHS: Record<string, string[]> = {
   'astrobuild.tips':                       ['Astro', 'JavaScript', 'CSS', 'Docker'],
   'authflow-privacy':                      ['HTML', 'CSS'],
   'personal_yarvis_linux':                 ['Python', 'Claude AI', 'Whisper', 'ElevenLabs'],
+  'praxis-torneo':                         ['Astro', 'React', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Three.js', 'Swiper'],
 };
 
 export async function fetchRepos(): Promise<GitHubRepo[]> {
