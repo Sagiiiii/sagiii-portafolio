@@ -26,6 +26,10 @@ export interface GitHubRepo {
 
 const GITHUB_USER = 'Sagiiiii';
 
+const REPO_DESCRIPTIONS: Record<string, string> = {
+  'praxis-torneo': 'Sitio web oficial del Torneo Académico del Colegio Praxis. Información de niveles, sedes, bases, evaluaciones y galería de eventos. Construido con Astro, React, GSAP y Three.js.',
+};
+
 const REPO_IMAGES: Record<string, string> = {
   'sagiiiii-portfolio':                    '/img/FOX2.jpg',
   'dashboard-analisis-datos':              '/img/dashboard.jpg',
@@ -94,7 +98,7 @@ export async function fetchRepos(): Promise<GitHubRepo[]> {
       id: r.id,
       name: r.name,
       full_name: r.full_name,
-      description: r.description,
+      description: REPO_DESCRIPTIONS[r.name] ?? r.description,
       language: r.language,
       html_url: r.html_url,
       homepage: LIVE_URLS[r.name] ?? r.homepage ?? null,
