@@ -5,6 +5,7 @@ export const LIVE_URLS: Record<string, string> = {
   'sagiiiii-portfolio':     'https://sagiiiii-portfolio.onrender.com',
   'dashboard-analisis-datos':'https://dashboard-analisis-datos.onrender.com',
   'mi-portfolio':           'https://mi-portfolio-rho-seven.vercel.app',
+  'praxis-torneo':          'https://praxis-torneo.vercel.app',
   // EcommerceMonteroStore: aún en desarrollo, sin deploy
 
 };
@@ -20,6 +21,7 @@ export const DISPLAY_NAMES: Record<string, string> = {
   'mi-portfolio':                           'Portfolio v2 — Astro + TypeScript',
   'astrobuild.tips':                        'Astrobuild Tips — Blog Técnico',
   'authflow-privacy':                       'AuthFlow — Privacy Policy',
+  'praxis-torneo':                          'Torneo Praxis — Sitio Web Oficial',
 };
 
 // Private repos added manually (API won't return them)

@@ -119,6 +119,29 @@ Stack tecnológico: Dart 63.1%, C++ 30.7%, CMake 13.5%, HTML / Swift / C para ca
     category: ["web", "backend", "data"],
     featured: true,
   },
+  {
+    id: 7,
+    title: "Torneo Praxis — Sitio Web Oficial",
+    short_desc: "Sitio web oficial del torneo académico del Colegio Praxis. Información de niveles, sedes, bases, evaluaciones y galería de eventos.",
+    description: `Sitio web oficial desarrollado para el torneo académico del Centro de Estudios Praxis SAC. Plataforma informativa completa que centraliza toda la información del evento: niveles educativos (Inicial, Primaria, Secundaria), sedes, bases del torneo, temario, evaluaciones de años anteriores y galería multimedia.
+
+Características principales:
+• Carrusel principal animado con GSAP y Swiper
+• Secciones por nivel educativo con información detallada
+• Descarga de bases y temarios en PDF
+• Galería de fotos de eventos anteriores
+• Animaciones 3D con Three.js en la sección de fundadores
+• Diseño responsive con Tailwind CSS 4
+• Múltiples páginas: Aniversario, Centro, Estrellas, Estrellitas, Esperanza, Festidanzas, Olimpiadas`,
+    technologies: ["Astro", "React", "TypeScript", "Tailwind CSS", "GSAP", "Three.js", "Swiper", "Framer Motion"],
+    github_urls: [
+      { label: "Repositorio", url: "https://github.com/Sagiiiii/praxis-torneo" },
+    ],
+    live_url: "https://praxis-torneo.vercel.app",
+    image_url: "/img/praxis-torneo.jpg",
+    category: ["frontend", "web"],
+    featured: true,
+  },
 ];
 
 export function getAll() { return PROJECTS; }
