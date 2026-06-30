@@ -7,7 +7,11 @@ import { fetchRepos, type GitHubRepo } from '../lib/github';
 let repos: GitHubRepo[] = [];
 try {
   const all = await fetchRepos();
-  repos = all.slice(0, 6);
+  const FEATURED = ['EcommerceMonteroStore', 'monteros_admin', 'praxis-torneo', 'dashboard-analisis-datos'];
+  const featured = all.filter(r => FEATURED.includes(r.name));
+  const rest = all.filter(r => !FEATURED.includes(r.name));
+  const combined = [...featured, ...rest];
+  repos = combined.slice(0, 8);
 } catch {}
 
 const testimonials = [
