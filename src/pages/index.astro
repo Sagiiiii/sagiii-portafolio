@@ -7,7 +7,7 @@ import { fetchRepos, type GitHubRepo } from '../lib/github';
 let repos: GitHubRepo[] = [];
 try {
   const all = await fetchRepos();
-  const FEATURED = ['EcommerceMonteroStore', 'monteros_admin', 'praxis-torneo', 'dashboard-analisis-datos'];
+  const FEATURED = ['monteros_tienda', 'monteros_admin', 'praxis-torneo', 'dashboard-analisis-datos'];
   const featured = all.filter(r => FEATURED.includes(r.name));
   const rest = all.filter(r => !FEATURED.includes(r.name));
   const combined = [...featured, ...rest];

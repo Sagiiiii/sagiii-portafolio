@@ -55,6 +55,8 @@ const LANG_CATEGORIES: Record<string, string[]> = {
 };
 
 const COMING_SOON_REPOS = new Set<string>();
+// Repos managed manually in PRIVATE_REPOS — exclude from GitHub API to avoid duplicates
+const MANUAL_ONLY_REPOS = new Set(['EcommerceMonteroStore']);
 const REPO_COVER_IMAGES: Record<string, string> = {
   'EcommerceMonteroStore': '/img/capturas/monteros-tienda.png',
   'monteros_admin':        '/img/capturas/monteros-admin.png',
@@ -97,7 +99,7 @@ export async function fetchRepos(): Promise<GitHubRepo[]> {
   const raw: any[] = await res.json();
 
   const publicRepos: GitHubRepo[] = raw
-    .filter(r => !r.fork && !r.private)
+    .filter(r => !r.fork && !r.private && !MANUAL_ONLY_REPOS.has(r.name))
     .map(r => ({
       id: r.id,
       name: r.name,
