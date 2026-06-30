@@ -63,6 +63,11 @@ export default function RepoCard({ repo: r, index }: Props) {
               </span>
             )}
             <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              {r.homepage && (
+                <span style={{ background: 'rgba(34,197,94,0.92)', borderRadius: '6px', padding: '3px 8px', fontSize: '0.65rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#fff', animation: 'pulse-dot 1.5s ease-in-out infinite' }}></span> LIVE
+                </span>
+              )}
               {r.is_private && (
                 <span style={{ background: 'rgba(232,101,26,0.9)', borderRadius: '6px', padding: '3px 8px', fontSize: '0.65rem', fontWeight: 700, color: '#fff' }}>
                   <i className="bi bi-lock-fill"></i> Privado

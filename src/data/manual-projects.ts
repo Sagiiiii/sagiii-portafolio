@@ -6,8 +6,7 @@ export const LIVE_URLS: Record<string, string> = {
   'dashboard-analisis-datos':'https://dashboard-analisis-datos.onrender.com',
   'mi-portfolio':           'https://mi-portfolio-rho-seven.vercel.app',
   'praxis-torneo':          'https://praxis-torneo.vercel.app',
-  // EcommerceMonteroStore: aún en desarrollo, sin deploy
-
+  'EcommerceMonteroStore':  'https://monterosstore.com',
 };
 
 // Display name overrides
@@ -17,7 +16,8 @@ export const DISPLAY_NAMES: Record<string, string> = {
   'Analsis-Soreus-Motors-CAPSTOM-PROJECT':  'Análisis Predictivo — Soreus Motors',
   'flutter-components':                     'Flutter Components — App Multiplataforma',
   'helpdesk-laravel':                       'HelpDesk — Sistema de Tickets TI',
-  'EcommerceMonteroStore':                  'E-commerce Montero Store',
+  'EcommerceMonteroStore':                  "Montero's Store — Tienda Online",
+  'monteros_admin':                         "Montero's Store — Panel Administrativo",
   'mi-portfolio':                           'Portfolio v2 — Astro + TypeScript',
   'astrobuild.tips':                        'Astrobuild Tips — Blog Técnico',
   'authflow-privacy':                       'AuthFlow — Privacy Policy',
@@ -83,6 +83,26 @@ export const PRIVATE_REPOS: GitHubRepo[] = [
     image_url: '/img/ecommerce.png',
     categories: ['frontend', 'backend', 'web'],
     technologies: ['Angular', 'Node.js', 'MongoDB', 'TypeScript', 'Bootstrap'],
+    readme_html: null,
+    is_private: true,
+  },
+  {
+    id: 9005,
+    name: 'monteros_admin',
+    full_name: 'Sagiiiii/EcommerceMonteroStore',
+    description: "Panel administrativo del e-commerce Montero's Store. Sistema en producción y en uso real por el equipo de la empresa. Gestión de productos, pedidos, inventario y clientes. Acceso seguro con autenticación. Proyecto LIVE para la empresa Montero's en Huancayo, Perú.",
+    language: 'TypeScript',
+    html_url: 'https://github.com/Sagiiiii/EcommerceMonteroStore',
+    homepage: 'https://admin.monterosstore.com',
+    stargazers_count: 0,
+    forks_count: 0,
+    created_at: '2025-01-01T00:00:00Z',
+    pushed_at: '2026-06-01T00:00:00Z',
+    topics: ['angular', 'admin-panel', 'ecommerce', 'nodejs', 'mongodb', 'typescript'],
+    fork: false,
+    image_url: '/img/capturas/monteros-admin.png',
+    categories: ['frontend', 'backend', 'web'],
+    technologies: ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'TypeScript'],
     readme_html: null,
     is_private: true,
   },

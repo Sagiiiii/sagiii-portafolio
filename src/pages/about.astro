@@ -135,7 +135,7 @@ import { TECH_ICON } from '../lib/tech-icons';
             <i class="bi bi-grid"></i> Ver proyectos
           </a>
           <a
-            href="/CV 2026.pdf"
+            href="/CV Documentado 2026.pdf"
             download
             class="btn-outline-fox"
             style="padding:0.4rem 1rem;font-size:0.85rem;"
@@ -574,6 +574,88 @@ import { TECH_ICON } from '../lib/tech-icons';
     </div>
   </div>
 
+  <!-- ── CERTIFICADOS ── -->
+  <div id="certificates" style="max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;">
+    <div style="margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);">
+      <p style="color:var(--fox);font-size:0.72rem;letter-spacing:3px;font-weight:700;margin-bottom:0.5rem;">
+        ◈ CERTIFICACIONES ◈
+      </p>
+      <h2 class="section-title" style="font-size:1.5rem;margin-bottom:1.75rem;">
+        Mis <span>Certificados</span>
+      </h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">
+        {
+          [
+            { src: '/img/certificate/arquitectura_certificado.webp', title: 'Arquitectura de Software' },
+            { src: '/img/certificate/Certificado_Fundamentos_NET.webp', title: 'Fundamentos .NET' },
+            { src: '/img/certificate/certificadonet.webp', title: '.NET Development' },
+            { src: '/img/certificate/certificadoprontengineri.webp', title: 'Front-End Engineering' },
+            { src: '/img/certificate/docker_certificado.webp', title: 'Docker' },
+            { src: '/img/certificate/fundamentossoftwarecertificate.webp', title: 'Fundamentos de Software' },
+            { src: '/img/certificate/Imagen pegada.png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (2).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (3).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (4).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (5).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (6).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (7).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (8).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (9).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (10).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (11).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (12).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (13).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (14).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (15).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (16).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (17).png', title: 'Certificado' },
+            { src: '/img/certificate/Imagen pegada (18).png', title: 'Certificado' },
+          ].map((cert) => (
+            <div
+              class="card cert-card"
+              style="overflow:hidden;cursor:zoom-in;transition:transform 0.2s,box-shadow 0.2s;"
+              onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(232,101,26,0.2)'"
+              onmouseout="this.style.transform='';this.style.boxShadow=''"
+              onclick={`openCert('${cert.src}','${cert.title}')`}
+            >
+              <div style="overflow:hidden;height:160px;">
+                <img
+                  src={cert.src}
+                  alt={cert.title}
+                  style="width:100%;height:160px;object-fit:cover;transition:transform 0.3s;"
+                  loading="lazy"
+                  onmouseover="this.style.transform='scale(1.05)'"
+                  onmouseout="this.style.transform=''"
+                />
+              </div>
+              <div style="padding:0.65rem 0.75rem;display:flex;align-items:center;gap:0.4rem;">
+                <i class="bi bi-patch-check-fill" style="color:var(--fox);font-size:0.8rem;flex-shrink:0;"></i>
+                <p style="font-size:0.75rem;font-weight:600;margin:0;line-height:1.3;color:var(--text);">{cert.title}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox overlay para certificados -->
+  <div id="certOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;">
+    <div id="certOverlayInner" style="position:relative;max-width:92vw;max-height:88vh;">
+      <img
+        id="certModalImg"
+        src=""
+        alt=""
+        style="max-width:92vw;max-height:82vh;object-fit:contain;border-radius:12px;border:2px solid rgba(232,101,26,0.45);display:block;"
+      />
+      <p id="certModalTitle" style="text-align:center;color:rgba(255,255,255,0.6);font-size:0.82rem;margin-top:0.75rem;"></p>
+      <button
+        id="certCloseBtn"
+        style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:var(--fox);border:none;color:#fff;cursor:pointer;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1;"
+      >✕</button>
+    </div>
+  </div>
+
   <!-- ── GITHUB STATS ── -->
   <div id="github-stats" style="max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;">
     <div style="margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);">
@@ -639,6 +721,41 @@ import { TECH_ICON } from '../lib/tech-icons';
     </div>
   </div>
 </Layout>
+
+<script>
+  function openCert(src: string, title: string) {
+    const overlay = document.getElementById('certOverlay') as HTMLElement;
+    const img = document.getElementById('certModalImg') as HTMLImageElement;
+    const caption = document.getElementById('certModalTitle') as HTMLElement;
+    img.src = src;
+    img.alt = title;
+    caption.textContent = title;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCertOverlay() {
+    const overlay = document.getElementById('certOverlay') as HTMLElement;
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('certOverlay');
+    const inner = document.getElementById('certOverlayInner');
+    const closeBtn = document.getElementById('certCloseBtn');
+
+    overlay?.addEventListener('click', closeCertOverlay);
+    inner?.addEventListener('click', (e) => e.stopPropagation());
+    closeBtn?.addEventListener('click', (e) => { e.stopPropagation(); closeCertOverlay(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCertOverlay();
+    });
+  });
+
+  (window as any).openCert = openCert;
+</script>
 
 <style>
   @keyframes pulse-dot {

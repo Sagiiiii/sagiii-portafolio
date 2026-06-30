@@ -169,7 +169,7 @@ export default function HeroSection() {
               >
                 <i className="bi bi-linkedin"></i> LinkedIn
               </a>
-              <a href="/cv-david-garcia.pdf" download
+              <a href="/CV Documentado 2026.pdf" download
                 className="btn-outline-fox" style={{ padding: '0.6rem 1rem' }}
                 title={lang === 'en' ? 'Download CV' : 'Descargar CV'}>
                 <i className="bi bi-file-earmark-arrow-down"></i> CV

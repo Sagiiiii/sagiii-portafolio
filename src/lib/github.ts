@@ -28,12 +28,13 @@ const GITHUB_USER = 'Sagiiiii';
 
 const REPO_DESCRIPTIONS: Record<string, string> = {
   'praxis-torneo': 'Sitio web oficial del Torneo Académico del Colegio Praxis. Información de niveles, sedes, bases, evaluaciones y galería de eventos. Construido con Astro, React, GSAP y Three.js.',
+  'EcommerceMonteroStore': "Tienda online completa de Montero's Store, publicada y en operación real. Catálogo de zapatillas, zapatos y accesorios de Nike, Puma, Adidas, New Balance y más. Sistema de búsqueda, carrito de compras y gestión de pedidos. Stack MEAN (Angular + Node.js + MongoDB). Proyecto LIVE para la empresa Montero's en Huancayo, Perú.",
+  'monteros_admin': "Panel administrativo del e-commerce Montero's Store. Sistema en producción y en uso real por el equipo de la empresa. Gestión de productos, pedidos, inventario y clientes con acceso seguro. Proyecto LIVE para la empresa Montero's en Huancayo, Perú.",
 };
 
 const REPO_IMAGES: Record<string, string> = {
   'sagiiiii-portfolio':                    '/img/FOX2.jpg',
   'dashboard-analisis-datos':              '/img/dashboard.jpg',
-  // EcommerceMonteroStore: usa imagen genérica de ecommerce, no la de Soreus
   'Analsis-Soreus-Motors-CAPSTOM-PROJECT': '/img/datascience.jpg',
   'flutter-components':                    '/img/mobile_flutter.jpg',
   'helpdesk-laravel':                      '/img/dashboard-la-gi-6.png',
@@ -53,9 +54,10 @@ const LANG_CATEGORIES: Record<string, string[]> = {
   'Java':             ['backend'],
 };
 
-const COMING_SOON_REPOS = new Set(['EcommerceMonteroStore']);
+const COMING_SOON_REPOS = new Set<string>();
 const REPO_COVER_IMAGES: Record<string, string> = {
-  'EcommerceMonteroStore': '/img/ecommerce.png',
+  'EcommerceMonteroStore': '/img/capturas/monteros-tienda.png',
+  'monteros_admin':        '/img/capturas/monteros-admin.png',
 };
 
 const REPO_CAT_OVERRIDES: Record<string, string[]> = {
@@ -63,6 +65,7 @@ const REPO_CAT_OVERRIDES: Record<string, string[]> = {
   'dashboard-analisis-datos':              ['data', 'backend', 'web'],
   'sagiiiii-portfolio':                    ['web', 'frontend'],
   'EcommerceMonteroStore':                 ['frontend', 'backend', 'web'],
+  'monteros_admin':                        ['frontend', 'backend', 'web'],
   'flutter-components':                    ['mobile'],
   'helpdesk-laravel':                      ['backend', 'web'],
   'personal_yarvis_linux':                 ['backend', 'data'],
@@ -75,6 +78,7 @@ const REPO_TECHS: Record<string, string[]> = {
   'dashboard-analisis-datos':              ['Python', 'Flask', 'Pandas', 'NumPy', 'Scikit-learn', 'Chart.js', 'JavaScript'],
   'helpdesk-laravel':                      ['Laravel', 'PHP', 'Blade', 'MySQL', 'JavaScript'],
   'EcommerceMonteroStore':                 ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'TypeScript', 'MySQL'],
+  'monteros_admin':                        ['Angular', 'Node.js', 'Express.js', 'MongoDB', 'TypeScript'],
   'Analsis-Soreus-Motors-CAPSTOM-PROJECT': ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'Matplotlib', 'Seaborn', 'Plotly', 'Jupyter Notebook'],
   'flutter-components':                    ['Flutter', 'Dart', 'Kotlin', 'Swift'],
   'mi-portfolio':                          ['Astro', 'TypeScript', 'CSS'],
