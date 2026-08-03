@@ -1,6 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { TECH_ICON } from '../lib/tech-icons';
+
+const CERTIFICATES = [
+  { src: '/img/certificate/arquitectura_certificado.webp', title: 'Arquitectura de Software' },
+  { src: '/img/certificate/Certificado_Fundamentos_NET.webp', title: 'Fundamentos .NET' },
+  { src: '/img/certificate/certificadonet.webp', title: '.NET Development' },
+  { src: '/img/certificate/certificadoprontengineri.webp', title: 'Front-End Engineering' },
+  { src: '/img/certificate/docker_certificado.webp', title: 'Docker' },
+  { src: '/img/certificate/fundamentossoftwarecertificate.webp', title: 'Fundamentos de Software' },
+  { src: '/img/certificate/Imagen pegada.png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (2).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (3).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (4).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (5).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (6).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (7).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (8).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (9).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (10).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (11).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (12).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (13).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (14).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (15).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (16).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (17).png', title: 'Certificado' },
+  { src: '/img/certificate/Imagen pegada (18).png', title: 'Certificado' },
+];
+
+const CERT_SLIDES = Array.from(
+  { length: Math.ceil(CERTIFICATES.length / 3) },
+  (_, i) => CERTIFICATES.slice(i * 3, i * 3 + 3)
+);
 ---
 
 <Layout title="Sobre mí — Sagiii.dev">
@@ -583,61 +615,91 @@ import { TECH_ICON } from '../lib/tech-icons';
       <h2 class="section-title" style="font-size:1.5rem;margin-bottom:1.75rem;">
         Mis <span>Certificados</span>
       </h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">
-        {
-          [
-            { src: '/img/certificate/arquitectura_certificado.webp', title: 'Arquitectura de Software' },
-            { src: '/img/certificate/Certificado_Fundamentos_NET.webp', title: 'Fundamentos .NET' },
-            { src: '/img/certificate/certificadonet.webp', title: '.NET Development' },
-            { src: '/img/certificate/certificadoprontengineri.webp', title: 'Front-End Engineering' },
-            { src: '/img/certificate/docker_certificado.webp', title: 'Docker' },
-            { src: '/img/certificate/fundamentossoftwarecertificate.webp', title: 'Fundamentos de Software' },
-            { src: '/img/certificate/Imagen pegada.png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (2).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (3).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (4).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (5).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (6).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (7).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (8).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (9).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (10).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (11).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (12).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (13).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (14).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (15).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (16).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (17).png', title: 'Certificado' },
-            { src: '/img/certificate/Imagen pegada (18).png', title: 'Certificado' },
-          ].map((cert) => (
-            <div
-              class="card cert-card"
-              style="overflow:hidden;cursor:zoom-in;transition:transform 0.2s,box-shadow 0.2s;"
-              onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(232,101,26,0.2)'"
-              onmouseout="this.style.transform='';this.style.boxShadow=''"
-              onclick={`openCert('${cert.src}','${cert.title}')`}
-            >
-              <div style="overflow:hidden;height:160px;">
-                <img
-                  src={cert.src}
-                  alt={cert.title}
-                  style="width:100%;height:160px;object-fit:cover;transition:transform 0.3s;"
-                  loading="lazy"
-                  onmouseover="this.style.transform='scale(1.05)'"
-                  onmouseout="this.style.transform=''"
-                />
+      <div class="cert-carousel" style="position:relative;overflow:hidden;border-radius:12px;">
+        <div id="certTrack" style="display:flex;transition:transform 0.4s ease;">
+          {
+            CERT_SLIDES.map((slide) => (
+              <div class="cert-slide" style="min-width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:0 0.15rem;box-sizing:border-box;">
+                {slide.map((cert) => (
+                  <div
+                    class="card cert-card"
+                    style="overflow:hidden;cursor:zoom-in;transition:transform 0.2s,box-shadow 0.2s;"
+                    onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(232,101,26,0.2)'"
+                    onmouseout="this.style.transform='';this.style.boxShadow=''"
+                    onclick={`openCert('${cert.src}','${cert.title}')`}
+                  >
+                    <div style="overflow:hidden;height:160px;">
+                      <img
+                        src={cert.src}
+                        alt={cert.title}
+                        style="width:100%;height:160px;object-fit:cover;transition:transform 0.3s;"
+                        loading="lazy"
+                        onmouseover="this.style.transform='scale(1.05)'"
+                        onmouseout="this.style.transform=''"
+                      />
+                    </div>
+                    <div style="padding:0.65rem 0.75rem;display:flex;align-items:center;gap:0.4rem;">
+                      <i class="bi bi-patch-check-fill" style="color:var(--fox);font-size:0.8rem;flex-shrink:0;"></i>
+                      <p style="font-size:0.75rem;font-weight:600;margin:0;line-height:1.3;color:var(--text);">{cert.title}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div style="padding:0.65rem 0.75rem;display:flex;align-items:center;gap:0.4rem;">
-                <i class="bi bi-patch-check-fill" style="color:var(--fox);font-size:0.8rem;flex-shrink:0;"></i>
-                <p style="font-size:0.75rem;font-weight:600;margin:0;line-height:1.3;color:var(--text);">{cert.title}</p>
-              </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;align-items:center;gap:1.25rem;margin-top:1.25rem;">
+        <button id="certPrevBtn" class="btn-outline-fox" style="padding:0.4rem 0.9rem;font-size:0.85rem;cursor:pointer;">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <div id="certDots" style="display:flex;gap:0.4rem;"></div>
+        <button id="certNextBtn" class="btn-outline-fox" style="padding:0.4rem 0.9rem;font-size:0.85rem;cursor:pointer;">
+          <i class="bi bi-chevron-right"></i>
+        </button>
       </div>
     </div>
   </div>
+
+  <script define:vars={{ certSlideCount: CERT_SLIDES.length }} is:inline>
+    let certIndex = 0;
+    const certTrack = document.getElementById('certTrack');
+    const certDots = document.getElementById('certDots');
+    const certPrevBtn = document.getElementById('certPrevBtn');
+    const certNextBtn = document.getElementById('certNextBtn');
+
+    for (let i = 0; i < certSlideCount; i++) {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', `Ir a certificados ${i + 1}`);
+      dot.style.cssText = 'width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;background:var(--border);transition:background 0.2s,transform 0.2s;padding:0;';
+      dot.onclick = () => { certIndex = i; updateCertCarousel(); };
+      certDots.appendChild(dot);
+    }
+
+    function updateCertCarousel() {
+      certTrack.style.transform = `translateX(-${certIndex * 100}%)`;
+      Array.from(certDots.children).forEach((dot, i) => {
+        dot.style.background = i === certIndex ? 'var(--fox)' : 'var(--border)';
+        dot.style.transform = i === certIndex ? 'scale(1.3)' : 'scale(1)';
+      });
+      certPrevBtn.disabled = certIndex === 0;
+      certNextBtn.disabled = certIndex === certSlideCount - 1;
+      certPrevBtn.style.opacity = certIndex === 0 ? '0.4' : '1';
+      certNextBtn.style.opacity = certIndex === certSlideCount - 1 ? '0.4' : '1';
+    }
+
+    certPrevBtn.addEventListener('click', () => {
+      certIndex = Math.max(0, certIndex - 1);
+      updateCertCarousel();
+    });
+    certNextBtn.addEventListener('click', () => {
+      certIndex = Math.min(certSlideCount - 1, certIndex + 1);
+      updateCertCarousel();
+    });
+
+    updateCertCarousel();
+  </script>
 
   <!-- Lightbox overlay para certificados -->
   <div id="certOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;">
@@ -670,6 +732,7 @@ import { TECH_ICON } from '../lib/tech-icons';
 
       <!-- Trofeos -->
       <div
+        id="trophyBox"
         style="text-align:center;margin-bottom:1.75rem;overflow-x:auto;border-radius:12px;border:1px solid var(--border);padding:1rem;background:var(--bg-card);"
       >
         <img
@@ -677,6 +740,7 @@ import { TECH_ICON } from '../lib/tech-icons';
           alt="GitHub Trophies — Sagiiiii"
           style="max-width:100%;border-radius:8px;"
           loading="lazy"
+          onerror="this.parentElement.innerHTML='<p style=\'color:var(--text-muted);font-size:0.82rem;margin:0;\'>🏆 Trofeos no disponibles ahora mismo (servicio externo caído). <a href=\'https://github.com/Sagiiiii\' target=\'_blank\' style=\'color:var(--fox);\'>Ver perfil en GitHub</a></p>'"
         />
       </div>
 
@@ -693,6 +757,7 @@ import { TECH_ICON } from '../lib/tech-icons';
             alt="GitHub Stats"
             style="width:100%;display:block;"
             loading="lazy"
+            onerror="this.onerror=null;this.src='https://github-readme-stats-eight-theta.vercel.app/api?username=Sagiiiii&show_icons=true&theme=dark&bg_color=1E1E1E&title_color=E8651A&icon_color=E8651A&text_color=EFEFEF&border_color=333333&hide_border=false&count_private=true'"
           />
         </div>
         <div
@@ -716,6 +781,7 @@ import { TECH_ICON } from '../lib/tech-icons';
           alt="Most used languages"
           style="max-width:500px;width:100%;display:block;margin:0 auto;"
           loading="lazy"
+          onerror="this.onerror=null;this.src='https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Sagiiiii&theme=dark&bg_color=1E1E1E&title_color=E8651A&text_color=EFEFEF&border_color=333333&layout=compact&hide_border=false&langs_count=10'"
         />
       </div>
     </div>

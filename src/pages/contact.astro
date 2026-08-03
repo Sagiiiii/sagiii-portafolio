@@ -55,14 +55,6 @@ import Layout from '../layouts/Layout.astro';
             <i class="bi bi-whatsapp" style="font-size:1.2rem;"></i>
             Escribir por WhatsApp
           </a>
-
-          <!-- Calendly -->
-          <button onclick="openCalendly()"
-            style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem;background:rgba(0,107,168,0.15);border:1px solid rgba(0,107,168,0.4);border-radius:10px;color:#006BA8;font-weight:700;font-size:0.9rem;transition:all 0.2s;cursor:pointer;width:100%;"
-            onmouseover="this.style.background='rgba(0,107,168,0.25)'" onmouseout="this.style.background='rgba(0,107,168,0.15)'">
-            <i class="bi bi-calendar-check" style="font-size:1.2rem;"></i>
-            Agendar reunión (Calendly)
-          </button>
         </div>
 
         <!-- Form -->
@@ -195,16 +187,4 @@ import Layout from '../layouts/Layout.astro';
       btn.disabled = false;
     }
   });
-
-  /* Calendly popup — reemplaza YOUR_CALENDLY_URL con tu URL real de Calendly */
-  (window as any).openCalendly = function() {
-    const url = 'https://calendly.com/sagiii'; // actualiza con tu URL
-    if ((window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({ url });
-    } else {
-      window.open(url, '_blank');
-    }
-  };
 </script>
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" is:inline async></script>

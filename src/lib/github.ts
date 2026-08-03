@@ -30,6 +30,8 @@ const REPO_DESCRIPTIONS: Record<string, string> = {
   'praxis-torneo': 'Sitio web oficial del Torneo Académico del Colegio Praxis. Información de niveles, sedes, bases, evaluaciones y galería de eventos. Construido con Astro, React, GSAP y Three.js.',
   'EcommerceMonteroStore': "Tienda online completa de Montero's Store, publicada y en operación real. Catálogo de zapatillas, zapatos y accesorios de Nike, Puma, Adidas, New Balance y más. Sistema de búsqueda, carrito de compras y gestión de pedidos. Stack MEAN (Angular + Node.js + MongoDB). Proyecto LIVE para la empresa Montero's en Huancayo, Perú.",
   'monteros_admin': "Panel administrativo del e-commerce Montero's Store. Sistema en producción y en uso real por el equipo de la empresa. Gestión de productos, pedidos, inventario y clientes con acceso seguro. Proyecto LIVE para la empresa Montero's en Huancayo, Perú.",
+  'dashboard-ciencias-sociales': 'Dashboard de rendimiento estudiantil — Ciencias Sociales, I Bimestre. Desarrollado para el Politécnico Regional del Centro. Visualización de notas y desempeño académico por curso.',
+  'InventarioApp-Net': 'Aplicación de consola en C# para gestión de inventario — proyecto práctico del curso Fundamentos de .NET (Platzi). Registro y administración de productos sobre .NET 10.',
 };
 
 const REPO_IMAGES: Record<string, string> = {
@@ -39,6 +41,10 @@ const REPO_IMAGES: Record<string, string> = {
   'flutter-components':                    '/img/mobile_flutter.jpg',
   'helpdesk-laravel':                      '/img/dashboard-la-gi-6.png',
   'praxis-torneo':                         '/img/praxis-torneo.jpg',
+  'mi-portfolio':                          '/img/capturas/mi-portfolio.png',
+  'astrobuild.tips':                       '/img/capturas/astrobuild-tips.jpg',
+  'dashboard-ciencias-sociales':           '/img/capturas/dashboard-ciencias-sociales.png',
+  'InventarioApp-Net':                     '/img/capturas/inventario-app-net.webp',
 };
 
 const LANG_CATEGORIES: Record<string, string[]> = {
@@ -72,6 +78,8 @@ const REPO_CAT_OVERRIDES: Record<string, string[]> = {
   'helpdesk-laravel':                      ['backend', 'web'],
   'personal_yarvis_linux':                 ['backend', 'data'],
   'praxis-torneo':                         ['frontend', 'web'],
+  'dashboard-ciencias-sociales':            ['frontend', 'data', 'web'],
+  'InventarioApp-Net':                      ['backend'],
 };
 
 // Technologies per repo (from language analysis + README)
@@ -88,6 +96,8 @@ const REPO_TECHS: Record<string, string[]> = {
   'authflow-privacy':                      ['HTML', 'CSS'],
   'personal_yarvis_linux':                 ['Python', 'Claude AI', 'Whisper', 'ElevenLabs'],
   'praxis-torneo':                         ['Astro', 'React', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Three.js', 'Swiper'],
+  'dashboard-ciencias-sociales':            ['HTML', 'CSS', 'JavaScript'],
+  'InventarioApp-Net':                      ['C#', '.NET'],
 };
 
 export async function fetchRepos(): Promise<GitHubRepo[]> {
